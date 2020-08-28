@@ -6,6 +6,9 @@
 
 package view;
 
+import model.Persona;
+import model.Usuario;
+
 /**
  *
  * @author jodarove
@@ -29,22 +32,84 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnOpenTesting = new javax.swing.JButton();
+        btnCrearPersona = new javax.swing.JButton();
+        btnCrearUsuario = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ClickCaja V2");
+
+        btnOpenTesting.setText("Run testing");
+        btnOpenTesting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenTestingActionPerformed(evt);
+            }
+        });
+
+        btnCrearPersona.setText("Crear Persona");
+        btnCrearPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearPersonaActionPerformed(evt);
+            }
+        });
+
+        btnCrearUsuario.setText("Crear Usuario");
+        btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearUsuarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnOpenTesting)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCrearPersona)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCrearUsuario)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(249, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnOpenTesting)
+                    .addComponent(btnCrearPersona)
+                    .addComponent(btnCrearUsuario))
+                .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnOpenTestingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenTestingActionPerformed
+        FormTesting ventana = new FormTesting();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnOpenTestingActionPerformed
+
+    private void btnCrearPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPersonaActionPerformed
+        Persona persona = new Persona();
+        persona.setNombre("Jose");
+        System.out.println("Nombre es: " + persona.getNombre());
+    }//GEN-LAST:event_btnCrearPersonaActionPerformed
+
+    private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
+        Usuario usuario = new Usuario();
+        usuario.setNombre("Jose");
+        usuario.setApellido("Romero");
+        usuario.setUsuario("jromero");
+        
+        System.out.println("Nuevo usuario creado: " + usuario +
+            " Nombre: " + usuario.getNombre() +
+            " Apellido: " + usuario.getApellido() +
+            " Usuario: " + usuario.getUsuario()
+        );
+    }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -82,5 +147,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCrearPersona;
+    private javax.swing.JButton btnCrearUsuario;
+    private javax.swing.JButton btnOpenTesting;
     // End of variables declaration//GEN-END:variables
 }

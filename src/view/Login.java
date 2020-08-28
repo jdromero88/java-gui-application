@@ -125,7 +125,7 @@ public class Login extends javax.swing.JFrame {
             abrir.setVisible(true);
             this.dispose();
         } else{
-            JOptionPane.showMessageDialog(rootPane, "Su Usuario o Contraseña son incorrectos", "Error de Acceso", 0); 
+            JOptionPane.showMessageDialog(rootPane, "Su Usuario o Contraseña son incorrectos", "Error de Acceso", 0);
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
