@@ -6,6 +6,8 @@
 
 package controller;
 
+import services.BCrypt;
+
 /**
  *
  * @author jodarove
@@ -13,21 +15,17 @@ package controller;
 public class Usuario {
     boolean login = false;
     public boolean loguearUsuario(String usuario, String password){
-        if (usuario.isEmpty() || password.isEmpty()) {
-            login = false;
-            System.err.println("Completa los campos");
-        } else {
-            if ("admin".equals(usuario)) {
-                if ("admin".equals(password)) {
-                    login = true;
-                }else{
-                    login = false;
-                    System.err.println("Datos incorrectos.");
-                }  
+        String test = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        if ("admin".equals(usuario)) {
+            if (BCrypt.checkpw("admin", test)) {
+                login = true;
             }else{
                 login = false;
-                System.err.println("Datos Incorrectos.");
-            }
+                System.err.println("Datos incorrectos.");
+            }  
+        }else{
+            login = false;
+            System.err.println("Datos Incorrectos.");
         }
         return login;
     }
@@ -35,7 +33,6 @@ public class Usuario {
         return true;
     }
     public void salir(){
-        System.exit(0);;
-//        return true;
+        System.exit(0);
     }
 }
