@@ -34,6 +34,7 @@ public class FormTesting extends javax.swing.JFrame {
         lblCodigoBarra = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btnGetKilo = new javax.swing.JButton();
+        btnConexion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -46,6 +47,13 @@ public class FormTesting extends javax.swing.JFrame {
             }
         });
 
+        btnConexion.setText("probar Conexion");
+        btnConexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConexionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -53,6 +61,7 @@ public class FormTesting extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnConexion)
                     .addComponent(btnGetKilo)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblCodigoBarra)
@@ -69,7 +78,9 @@ public class FormTesting extends javax.swing.JFrame {
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGetKilo)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConexion)
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         pack();
@@ -83,9 +94,18 @@ public class FormTesting extends javax.swing.JFrame {
         }else{
             Testing test = new Testing();
             double kilo = test.getKilo(codigo);
-            JOptionPane.showMessageDialog(rootPane, "El peso de su producto es: " + kilo + " gramos.", "El peso", 1);
+            JOptionPane.showMessageDialog(rootPane, "El peso de su producto es: " + kilo + " kgs.", "El peso", 1);
         }
     }//GEN-LAST:event_btnGetKiloActionPerformed
+
+    private void btnConexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConexionActionPerformed
+        Testing usuario = new Testing();
+        try {
+            usuario.getUsuarios();
+        } catch (Exception e) {
+            System.err.println("Algo paso: " + e);
+        }
+    }//GEN-LAST:event_btnConexionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,6 +143,7 @@ public class FormTesting extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConexion;
     private javax.swing.JButton btnGetKilo;
     private javax.swing.JLabel lblCodigoBarra;
     private javax.swing.JTextField txtCodigo;
