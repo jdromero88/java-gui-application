@@ -8,6 +8,9 @@ package view;
 
 import controller.Usuario;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -119,7 +122,6 @@ public class Login extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         String usuario = txtUsuario.getText();
         String password = String.valueOf(txtPassword.getPassword());
-        System.out.println("pass " + password);
         Usuario entrar = new Usuario();
         if(usuario.isEmpty() || password.isEmpty()){
             txtUsuario.setText("");
@@ -127,12 +129,16 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Complete los campos", "Error de Acceso", 0);
             
         }else{
-            if (entrar.loguearUsuario(usuario, password)) {
-                MenuPrincipal abrir = new MenuPrincipal();
-                abrir.setVisible(true);
-                this.dispose();
-            } else{
-                JOptionPane.showMessageDialog(rootPane, "Su Usuario o Contraseña son incorrectos", "Error de Acceso", 0);
+            try {
+                if (entrar.loguearUsuario(usuario, password)) {
+                    MenuPrincipal abrir = new MenuPrincipal();
+                    abrir.setVisible(true);
+                    this.dispose();
+                } else{
+                    JOptionPane.showMessageDialog(rootPane, "Su Usuario o Contraseña son incorrectos", "Error de Acceso", 0);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
