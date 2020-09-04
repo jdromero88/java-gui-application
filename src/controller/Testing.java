@@ -39,7 +39,7 @@ public class Testing {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                System.out.println("Usuario: " + rs.getString("nick_usuario"));
+                System.out.println("Usuario: " + rs.getString("nombre"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,"Problema en getUsuarios() " + e);

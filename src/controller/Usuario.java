@@ -23,17 +23,17 @@ public class Usuario {
     Conexion mysql = new Conexion();
     Connection cn = mysql.conectar();
     boolean login = false;
-    LinkedHashMap findBy(String nick_usuario) throws SQLException{
-        String usuario = nick_usuario;
+    LinkedHashMap findBy(String nombre) throws SQLException{
+        String usuario = nombre;
         String password = null;
         LinkedHashMap<String, String> user = new LinkedHashMap<String, String>();
-            query = "SELECT * FROM usuarios WHERE nick_usuario LIKE '" + nick_usuario + "'";
+            query = "SELECT * FROM usuarios WHERE nombre LIKE '" + usuario + "'";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                usuario = rs.getString("nick_usuario");
-                password = rs.getString("pass_usuario");
+                usuario = rs.getString("nombre");
+                password = rs.getString("password_digest");
             }
             user.put(usuario, password);
         } catch (SQLException e) {
@@ -51,8 +51,8 @@ public class Usuario {
         }
         String test = BCrypt.hashpw(password, BCrypt.gensalt(12));        
         System.out.println("soytest:" + test);
-        if ("admin".equals(usuario)) {
-            if (BCrypt.checkpw("admin", test)) {
+        if ("jromero".equals(usuario)) {
+            if (BCrypt.checkpw("password", test)) {
                 login = true;
             }else{
                 login = false;

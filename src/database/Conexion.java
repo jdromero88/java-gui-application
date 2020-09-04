@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 public class Conexion {
     String db_user = "jromero";
     String db_pass = "978admin123";
-    String db_name = "sol";
+    String db_name = "facturacion_development";
     String db_url = "jdbc:mysql://localhost:3306/" + db_name;
     
     public Connection conectar(){
