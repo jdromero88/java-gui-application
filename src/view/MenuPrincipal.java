@@ -6,6 +6,7 @@
 
 package view;
 
+import controller.CategoriaController;
 import model.Categoria;
 import model.Role;
 import model.Usuario;
@@ -100,9 +101,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearPersonaActionPerformed
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
-        Role role = new Role();
-        role.setNombre("admin");
-        System.out.println(role.getNombre());
+        CategoriaController test = new CategoriaController();
+        try {
+            System.out.println(test.index().get(1).getNombre());
+        } catch (Exception e) {
+            System.err.println("Algo paso");
+        }
+        
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
     /**
