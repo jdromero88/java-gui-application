@@ -6,21 +6,23 @@
 
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author jodarove
  */
-public class Usuario extends Persona{
+public class Usuario extends Funcionario{
     private String usuario;
+    private String password;
 
-    @Override
-    public String getNombre() {
-        return super.getNombre(); //To change body of generated methods, choose Tools | Templates.
+    public Usuario() {
     }
 
-    @Override
-    public void setNombre(String nombre) {
-        super.setNombre(nombre); //To change body of generated methods, choose Tools | Templates.
+    public Usuario(String usuario, String password, String emergenciaContacto, String emergenciaTelefono, String emergenciaRelacion, String nombre, String apellido, String cedula, String sexo, String telefono, String email, String comentario, Date fechaNacimiento) {
+        super(emergenciaContacto, emergenciaTelefono, emergenciaRelacion, nombre, apellido, cedula, sexo, telefono, email, comentario, fechaNacimiento);
+        this.usuario = usuario;
+        this.password = password;
     }
 
     public String getUsuario() {
@@ -30,7 +32,13 @@ public class Usuario extends Persona{
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-    
-    
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     
 }

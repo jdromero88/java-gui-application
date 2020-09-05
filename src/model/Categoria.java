@@ -10,13 +10,13 @@ package model;
  *
  * @author jodarove
  */
-public class Departamento {
+public class Categoria {
     private String nombre;
 
-    public Departamento() {
+    public Categoria(){
     }
-
-    public Departamento(String nombre) {
+    
+    public Categoria(String nombre) {
         this.nombre = nombre;
     }
 

@@ -6,10 +6,38 @@
 
 package model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author jodarove
  */
 public class DetalleVenta {
+    private double cantidad;
+    private BigDecimal precio;
+
+    public DetalleVenta() {
+    }
+
+    public DetalleVenta(double cantidad, BigDecimal precio) {
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
+
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
     
 }

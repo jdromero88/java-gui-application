@@ -7,6 +7,7 @@
 package clickcaja;
 
 import view.Login;
+import view.MenuPrincipal;
 
 /**
  *
@@ -19,7 +20,10 @@ public class ClickCaja {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Login open = new Login();
+//        por motivos de rapidez sacamos el loguin por ahora
+//        Login open = new Login();
+//        open.setVisible(true);
+        MenuPrincipal open = new MenuPrincipal();
         open.setVisible(true);
     }
     

@@ -6,7 +6,8 @@
 
 package view;
 
-import model.Persona;
+import model.Categoria;
+import model.Role;
 import model.Usuario;
 
 /**
@@ -93,22 +94,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOpenTestingActionPerformed
 
     private void btnCrearPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPersonaActionPerformed
-        Persona persona = new Persona();
-        persona.setNombre("Jose");
-        System.out.println("Nombre es: " + persona.getNombre());
+        Categoria test = new Categoria();
+        test.setNombre("Lacteos");
+        System.out.println(test.getNombre());
     }//GEN-LAST:event_btnCrearPersonaActionPerformed
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Jose");
-        usuario.setApellido("Romero");
-        usuario.setUsuario("jromero");
-        
-        System.out.println("Nuevo usuario creado: " + usuario +
-            " Nombre: " + usuario.getNombre() +
-            " Apellido: " + usuario.getApellido() +
-            " Usuario: " + usuario.getUsuario()
-        );
+        Role role = new Role();
+        role.setNombre("admin");
+        System.out.println(role.getNombre());
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
     /**
