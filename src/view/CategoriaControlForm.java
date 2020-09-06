@@ -226,6 +226,11 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     private void agregar(){
         CategoriaForm abrir = new CategoriaForm(null, true);
         abrir.setVisible(true);
+        try {
+            cargarTabla();
+        } catch (Exception ex) {
+            Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void editar(){
@@ -257,10 +262,6 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         } catch (Exception e) {
             System.err.println("Error al obtener las categorias para popular la tabla: " + e);
         }
-//        for (Integer Categoria.id : categorias) { 		      
-//           System.out.println(categoria); 		
-//        }
-//        modelo.addRow(rowData);
         tblCategorias.setModel(modelo);
     }
     
