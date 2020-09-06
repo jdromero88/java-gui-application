@@ -6,6 +6,13 @@
 
 package view;
 
+import controller.CategoriaController;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import model.Categoria;
+
 /**
  *
  * @author jodarove
@@ -19,6 +26,11 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        try {
+            cargarTabla();
+        } catch (Exception ex) {
+            Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -227,6 +239,31 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     private void cerrar(){
         dispose();
     }
+//    public String[] colMedHdr = { "Medicine", "Dose", "Date", "Time" };
+//    public DefaultTableModel tblModel = new DefaultTableModel(colMedHdr, 0);
+//    public ArrayList<String> medList = new ArrayList<String>();
+    private void cargarTabla() throws Exception{
+        String[] titulos = {"Código", "Nombre"};
+        String[] registro = new String[2];
+        ArrayList<Categoria> categorias;
+        DefaultTableModel modelo = new DefaultTableModel(titulos, 0);
+        try {
+            categorias = CategoriaController.getAll();
+            for (Categoria categoria : categorias) {
+                registro[0] = String.valueOf(categoria.getId());
+                registro[1] = categoria.getNombre();
+                modelo.addRow(registro);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al obtener las categorias para popular la tabla: " + e);
+        }
+//        for (Integer Categoria.id : categorias) { 		      
+//           System.out.println(categoria); 		
+//        }
+//        modelo.addRow(rowData);
+        tblCategorias.setModel(modelo);
+    }
+    
     /**
      * @param args the command line arguments
      */

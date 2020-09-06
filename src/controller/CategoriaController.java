@@ -19,7 +19,7 @@ import model.Categoria;
  * @author jodarove
  */
 public class CategoriaController {
-    public ArrayList<Categoria> getAll() throws Exception{
+    public static ArrayList<Categoria> getAll() throws Exception{
         // nuevo codigo
         String query = "SELECT * FROM categoria ORDER BY id";
         ArrayList<Categoria> categorias = new ArrayList<>();
