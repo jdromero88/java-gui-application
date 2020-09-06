@@ -7,6 +7,7 @@
 package view;
 
 import controller.CategoriaController;
+import javax.swing.JOptionPane;
 import model.Categoria;
 
 /**
@@ -104,6 +105,7 @@ public class CategoriaForm extends javax.swing.JDialog {
     private void agregar(){
         try {
             CategoriaController.add(categoria);
+            JOptionPane.showMessageDialog(rootPane, "Categoría agregada!", "Información", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         } catch (Exception e) {
             System.err.println("Error en agregar " + e);

@@ -10,6 +10,7 @@ import controller.CategoriaController;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Categoria;
 
@@ -18,7 +19,8 @@ import model.Categoria;
  * @author jodarove
  */
 public class CategoriaControlForm extends javax.swing.JDialog {
-
+    int valorGrilla = -1;
+    Categoria categoria;
     /**
      * Creates new form CategoriaControlForm
      */
@@ -84,6 +86,11 @@ public class CategoriaControlForm extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblCategoriasMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(tblCategorias);
@@ -211,20 +218,30 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        editar();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         cerrar();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
+    private void tblCategoriasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriasMousePressed
+        valorGrilla = tblCategorias.rowAtPoint(evt.getPoint());
+        try {
+            seleccionarCategoria(valorGrilla);
+        } catch (Exception e) {
+            System.err.println("No pude seleccionar ninguna categoría: " + e);
+        }
+    }//GEN-LAST:event_tblCategoriasMousePressed
+
     
     private void agregar(){
         CategoriaForm abrir = new CategoriaForm(null, true);
+        abrir.setTitle("Agregar Categoría");
         abrir.setVisible(true);
         try {
             cargarTabla();
@@ -234,19 +251,43 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     }
     
     private void editar(){
-        
+        if (valorGrilla > -1 ) {
+            CategoriaForm abrir = new CategoriaForm(null, true);
+            abrir.setTitle("Editar Categoría");
+            abrir.setVisible(true);
+            try {
+                cargarTabla();
+            } catch (Exception ex) {
+                Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Selecciona categoría para editar", "Información", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void eliminar(){
-        
+        if (valorGrilla > -1 ) {
+            try {
+                CategoriaController.delete(categoria);
+                JOptionPane.showMessageDialog(rootPane, "Categoría eliminada!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                cargarTabla();
+            } catch (Exception ex) {
+                Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else{
+            JOptionPane.showMessageDialog(rootPane, "Selecciona categoría para eliminar", "Información", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void cerrar(){
         dispose();
     }
-//    public String[] colMedHdr = { "Medicine", "Dose", "Date", "Time" };
-//    public DefaultTableModel tblModel = new DefaultTableModel(colMedHdr, 0);
-//    public ArrayList<String> medList = new ArrayList<String>();
+
+    private void seleccionarCategoria(int valor) throws Exception{
+        String categoriaNombre = (String)tblCategorias.getValueAt(valor, 1);
+        System.out.println(categoriaNombre);
+        categoria = CategoriaController.get(categoriaNombre);
+    }
     private void cargarTabla() throws Exception{
         String[] titulos = {"Código", "Nombre"};
         String[] registro = new String[2];
