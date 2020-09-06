@@ -7,9 +7,6 @@
 package view;
 
 import controller.CategoriaController;
-import model.Categoria;
-import model.Role;
-import model.Usuario;
 
 /**
  *
@@ -35,7 +32,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btnOpenTesting = new javax.swing.JButton();
-        btnCrearPersona = new javax.swing.JButton();
+        btnAgregarCategoria = new javax.swing.JButton();
         btnCrearUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,10 +45,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnCrearPersona.setText("Crear Persona");
-        btnCrearPersona.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarCategoria.setText("Agregar Categoria");
+        btnAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearPersonaActionPerformed(evt);
+                btnAgregarCategoriaActionPerformed(evt);
             }
         });
 
@@ -70,7 +67,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnOpenTesting)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCrearPersona)
+                .addComponent(btnAgregarCategoria)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCrearUsuario)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -81,7 +78,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addContainerGap(249, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOpenTesting)
-                    .addComponent(btnCrearPersona)
+                    .addComponent(btnAgregarCategoria)
                     .addComponent(btnCrearUsuario))
                 .addGap(26, 26, 26))
         );
@@ -94,19 +91,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ventana.setVisible(true);
     }//GEN-LAST:event_btnOpenTestingActionPerformed
 
-    private void btnCrearPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPersonaActionPerformed
-        Categoria test = new Categoria();
-        test.setNombre("Lacteos");
-        System.out.println(test.getNombre());
-    }//GEN-LAST:event_btnCrearPersonaActionPerformed
+    private void btnAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCategoriaActionPerformed
+        CategoriaForm abrir = new CategoriaForm(this, true);
+        abrir.setVisible(true);
+    }//GEN-LAST:event_btnAgregarCategoriaActionPerformed
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
-        CategoriaController test = new CategoriaController();
-        try {
-            System.out.println(test.index().get(1).getNombre());
-        } catch (Exception e) {
-            System.err.println("Algo paso");
-        }
         
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
@@ -146,7 +136,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCrearPersona;
+    private javax.swing.JButton btnAgregarCategoria;
     private javax.swing.JButton btnCrearUsuario;
     private javax.swing.JButton btnOpenTesting;
     // End of variables declaration//GEN-END:variables

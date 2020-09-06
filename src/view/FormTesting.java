@@ -99,12 +99,7 @@ public class FormTesting extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGetKiloActionPerformed
 
     private void btnConexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConexionActionPerformed
-        Testing usuario = new Testing();
-        try {
-            usuario.getUsuarios();
-        } catch (Exception e) {
-            System.err.println("Algo paso: " + e);
-        }
+
     }//GEN-LAST:event_btnConexionActionPerformed
 
     /**

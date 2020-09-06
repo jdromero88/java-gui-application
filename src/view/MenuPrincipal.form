@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnOpenTesting" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnCrearPersona" min="-2" max="-2" attributes="0"/>
+              <Component id="btnAgregarCategoria" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnCrearUsuario" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
@@ -41,7 +41,7 @@
               <EmptySpace pref="249" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnOpenTesting" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCrearPersona" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnAgregarCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCrearUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
@@ -58,12 +58,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpenTestingActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnCrearPersona">
+    <Component class="javax.swing.JButton" name="btnAgregarCategoria">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Crear Persona"/>
+        <Property name="text" type="java.lang.String" value="Agregar Categoria"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearPersonaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarCategoriaActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCrearUsuario">

@@ -6,18 +6,30 @@
 
 package model;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author jodarove
  */
 public class Categoria {
+    private int id;
     private String nombre;
 
-    public Categoria(){
+    public Categoria() {
     }
-    
-    public Categoria(String nombre) {
+
+    public Categoria(int id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {

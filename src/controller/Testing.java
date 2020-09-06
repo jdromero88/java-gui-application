@@ -6,13 +6,6 @@
 
 package controller;
 
-import database.Conexion;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author jodarove
@@ -31,20 +24,4 @@ public class Testing {
         return kilo;
     }
     
-    public void getUsuarios() throws SQLException{
-        String query = "SELECT * FROM usuarios";
-        Conexion mysql = new Conexion(); 
-        Connection cn = mysql.conectar();
-        try {
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                System.out.println("Usuario: " + rs.getString("nombre"));
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Problema en getUsuarios() " + e);
-        } finally{
-            if (cn != null) cn.close();
-        }
-    }
 }

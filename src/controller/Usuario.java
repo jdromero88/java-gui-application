@@ -6,7 +6,7 @@
 
 package controller;
 
-import database.Conexion;
+import database.DBUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,17 +19,15 @@ import services.BCrypt;
  * @author jodarove
  */
 public class Usuario {
-    String query;
-    Conexion mysql = new Conexion();
-    Connection cn = mysql.conectar();
     boolean login = false;
-    LinkedHashMap findBy(String nombre) throws SQLException{
+    LinkedHashMap findBy(String nombre) throws Exception{
         String usuario = nombre;
         String password = null;
+        String query = "SELECT * FROM usuarios WHERE nombre LIKE '" + usuario + "'";
         LinkedHashMap<String, String> user = new LinkedHashMap<String, String>();
-            query = "SELECT * FROM usuarios WHERE nombre LIKE '" + usuario + "'";
+        Connection connection = DBUtil.getConnection();
         try {
-            Statement st = cn.createStatement();
+            Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 usuario = rs.getString("nombre");
@@ -39,12 +37,11 @@ public class Usuario {
         } catch (SQLException e) {
             System.err.println("Error: " + e);
         } finally{
-            if(cn != null) cn.close();
-//            System.err.println("No cerre la conexion");
+            DBUtil.closeConnection();
         }
         return user;
     }
-    public boolean loguearUsuario(String usuario, String password) throws SQLException{        
+    public boolean loguearUsuario(String usuario, String password) throws Exception{        
         if(usuario == findBy(usuario).get(usuario)){
             System.out.println(findBy(usuario).get(password));
             System.out.println("Usuario encontrado: " + usuario);
