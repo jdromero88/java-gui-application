@@ -6,7 +6,6 @@
 
 package view;
 
-import controller.CategoriaController;
 
 /**
  *
@@ -32,8 +31,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btnOpenTesting = new javax.swing.JButton();
-        btnAgregarCategoria = new javax.swing.JButton();
-        btnCrearUsuario = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuArchivo = new javax.swing.JMenu();
+        menuItemSalir = new javax.swing.JMenuItem();
+        menuConfiguracion = new javax.swing.JMenu();
+        menuItemCategoria = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ClickCaja V2");
@@ -45,19 +47,39 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnAgregarCategoria.setText("Agregar Categoria");
-        btnAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarCategoriaActionPerformed(evt);
-            }
-        });
+        menuArchivo.setText("Archivo");
+        menuArchivo.setToolTipText("Archivo");
+        menuArchivo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
-        btnCrearUsuario.setText("Crear Usuario");
-        btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
+        menuItemSalir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        menuItemSalir.setText("Salir");
+        menuItemSalir.setToolTipText("Salir");
+        menuItemSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearUsuarioActionPerformed(evt);
+                menuItemSalirActionPerformed(evt);
             }
         });
+        menuArchivo.add(menuItemSalir);
+
+        jMenuBar1.add(menuArchivo);
+
+        menuConfiguracion.setText("Configuración");
+        menuConfiguracion.setToolTipText("Configuración");
+        menuConfiguracion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        menuItemCategoria.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        menuItemCategoria.setText("Categoría");
+        menuItemCategoria.setToolTipText("Categoría");
+        menuItemCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCategoriaActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(menuItemCategoria);
+
+        jMenuBar1.add(menuConfiguracion);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,20 +88,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnOpenTesting)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgregarCategoria)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCrearUsuario)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(321, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(249, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOpenTesting)
-                    .addComponent(btnAgregarCategoria)
-                    .addComponent(btnCrearUsuario))
+                .addContainerGap(220, Short.MAX_VALUE)
+                .addComponent(btnOpenTesting)
                 .addGap(26, 26, 26))
         );
 
@@ -91,14 +106,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ventana.setVisible(true);
     }//GEN-LAST:event_btnOpenTestingActionPerformed
 
-    private void btnAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCategoriaActionPerformed
-        CategoriaForm abrir = new CategoriaForm(this, true);
-        abrir.setVisible(true);
-    }//GEN-LAST:event_btnAgregarCategoriaActionPerformed
+    private void menuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_menuItemSalirActionPerformed
 
-    private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
-        
-    }//GEN-LAST:event_btnCrearUsuarioActionPerformed
+    private void menuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCategoriaActionPerformed
+        CategoriaControlForm abrir = new CategoriaControlForm(this, true);
+        abrir.setVisible(true);
+    }//GEN-LAST:event_menuItemCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,8 +151,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarCategoria;
-    private javax.swing.JButton btnCrearUsuario;
     private javax.swing.JButton btnOpenTesting;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuConfiguracion;
+    private javax.swing.JMenuItem menuItemCategoria;
+    private javax.swing.JMenuItem menuItemSalir;
     // End of variables declaration//GEN-END:variables
 }

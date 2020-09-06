@@ -33,6 +33,8 @@ public class CategoriaForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
@@ -40,34 +42,48 @@ public class CategoriaForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Categoría");
-        setPreferredSize(new java.awt.Dimension(456, 64));
+        setPreferredSize(new java.awt.Dimension(469, 112));
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridLayout(2, 2));
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Agregar Categoría");
+        getContentPane().add(jLabel2, java.awt.BorderLayout.PAGE_START);
+
+        jPanel1.setMinimumSize(new java.awt.Dimension(469, 83));
+        jPanel1.setPreferredSize(new java.awt.Dimension(469, 83));
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Nombre:");
-        getContentPane().add(jLabel1);
+        jPanel1.add(jLabel1);
 
+        txtNombre.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtNombre.setToolTipText("Nombre");
         txtNombre.setMinimumSize(new java.awt.Dimension(100, 20));
         txtNombre.setPreferredSize(new java.awt.Dimension(100, 20));
-        getContentPane().add(txtNombre);
+        jPanel1.add(txtNombre);
 
+        btnAgregar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAgregar);
+        jPanel1.add(btnAgregar);
 
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar);
+        jPanel1.add(btnCancelar);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -143,6 +159,8 @@ public class CategoriaForm extends javax.swing.JDialog {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
