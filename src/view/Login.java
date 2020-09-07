@@ -51,6 +51,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Loguearse al Sistema");
         setMinimumSize(new java.awt.Dimension(400, 352));
+        setResizable(false);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/login_icon.png"))); // NOI18N
@@ -137,7 +138,7 @@ public class Login extends javax.swing.JFrame {
                 } else{
                     JOptionPane.showMessageDialog(rootPane, "Su Usuario o Contraseña son incorrectos", "Error de Acceso", 0);
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

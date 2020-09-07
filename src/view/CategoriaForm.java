@@ -102,22 +102,35 @@ public class CategoriaForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        setDatos();
-        if (btnOk.getText().equals("Agregar")) {
-            agregar();
-        }else{
-            editar();
+        // si validar datos devuelve true seteamos los datos
+        if (validarDatos()) {
+            setDatos();
+            //tomamos el texto del boton y si es agregar ejecutamos agregar else editar
+            if (btnOk.getText().equals("Agregar")) {
+                agregar();
+            }else{
+                editar();
+            }
         }
-                
-        
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private boolean validarDatos(){
+        String nombre = txtNombre.getText();
+        // chequeamos si nombre es null o vacio
+        if (nombre == null || nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos", "Campos incompletos", JOptionPane.INFORMATION_MESSAGE);
+            txtNombre.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+    }
     private void setDatos(){
-        categoria.setNombre(txtNombre.getText());
+        categoria.setNombre(StringUtils.capitalize(txtNombre.getText()));
     }
     
     private void agregar(){

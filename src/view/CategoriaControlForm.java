@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class CategoriaControlForm extends javax.swing.JDialog {
     Categoria categoria = null;
-//    private int filaSeleccionada = -1;
     /**
      * Creates new form CategoriaControlForm
      */
