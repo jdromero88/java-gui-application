@@ -10,8 +10,11 @@ import controller.CategoriaController;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import model.Categoria;
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,14 +23,29 @@ import org.apache.commons.lang3.StringUtils;
  * @author jodarove
  */
 public class CategoriaControlForm extends javax.swing.JDialog {
-    Categoria categoria = null;
+    private Categoria categoria = null;
+    private final String[] titulos = {"Código", "Nombre"};
+    // necesario para filtar
+    private TableRowSorter<DefaultTableModel> sorter;
+    private DefaultTableModel modelo;
+
     /**
      * Creates new form CategoriaControlForm
      */
     public CategoriaControlForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        // centra el form
         setLocationRelativeTo(null);
+        
+        // Agrupamos los radio buttons
+        ButtonGroup group = new ButtonGroup();
+        group.add(rBtnCodigo);
+        group.add(rBtnNombre);
+                
+        // al abrir rBtnNombre seleccionado por defecto
+        rBtnNombre.setSelected(true);
         try {
             cargarTabla();
         } catch (Exception ex) {
@@ -55,6 +73,8 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
+        rBtnCodigo = new javax.swing.JRadioButton();
+        rBtnNombre = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -62,11 +82,16 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setText("Buscar:");
+        jLabel1.setText("Buscar por:");
         jLabel1.setToolTipText("Buscar...");
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtBuscar.setToolTipText("Buscar...");
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
         tblCategorias.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
@@ -155,19 +180,29 @@ public class CategoriaControlForm extends javax.swing.JDialog {
                 .addContainerGap(185, Short.MAX_VALUE))
         );
 
+        rBtnCodigo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        rBtnCodigo.setText("Cod.");
+
+        rBtnNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        rBtnNombre.setText("Nombre");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rBtnCodigo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rBtnNombre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -177,7 +212,9 @@ public class CategoriaControlForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rBtnCodigo)
+                    .addComponent(rBtnNombre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -223,7 +260,29 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         cerrar();
     }//GEN-LAST:event_btnCerrarActionPerformed
- 
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        String textoBuscado = txtBuscar.getText();
+        filtrarTabla(textoBuscado);
+    }//GEN-LAST:event_txtBuscarKeyReleased
+    
+    private void filtrarTabla(String textoBuscado){
+        RowFilter<DefaultTableModel, Object> rf = null;
+        try {
+            // si radioButton nombre esta seleccionado buscamos por nombre
+            if(rBtnNombre.isSelected()){
+                rf = RowFilter.regexFilter(textoBuscado, 1);
+            }
+            // si radioButton nombre esta seleccionado buscamos por id
+            if(rBtnCodigo.isSelected()){
+                rf = RowFilter.regexFilter(textoBuscado, 0);
+            }            
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
+
     private Boolean seleccionarCategoria() throws Exception{
         int filaSeleccionada = tblCategorias.getSelectedRow();
         if (filaSeleccionada == -1) {
@@ -249,7 +308,6 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     }
   
     private void editar(){
-        System.out.println(StringUtils.capitalize("test"));
         try {
             if (seleccionarCategoria()) {
                 // desde editar pasamos el objeto categoria para saber cual objeto actualizar.
@@ -280,10 +338,10 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     }
     
     private void cargarTabla() throws Exception{
-        String[] titulos = {"Código", "Nombre"};
         String[] registro = new String[2];
         ArrayList<Categoria> categorias;
-        DefaultTableModel modelo = new DefaultTableModel(titulos, 0);
+        // instanciamos para la tabla
+        modelo = new DefaultTableModel(titulos, 0);
         try {
             categorias = CategoriaController.getAll();
             for (Categoria categoria : categorias) {
@@ -294,6 +352,8 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         } catch (Exception e) {
             System.err.println("Error al obtener las categorias para popular la tabla: " + e);
         }
+        sorter = new TableRowSorter<>(modelo);
+        tblCategorias.setRowSorter(sorter);
         tblCategorias.setModel(modelo);
     }
     
@@ -349,6 +409,8 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rBtnCodigo;
+    private javax.swing.JRadioButton rBtnNombre;
     private javax.swing.JTable tblCategorias;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
