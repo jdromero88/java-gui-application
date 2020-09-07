@@ -271,6 +271,9 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         filtrarTabla(textoBuscado);
     }//GEN-LAST:event_txtBuscarKeyReleased
     
+    private void limpiarTxtBuscar(){
+        txtBuscar.setText(null);
+    }
     private void filtrarTabla(String textoBuscado){
         RowFilter<DefaultTableModel, Object> rf = null;
         try {
@@ -321,6 +324,7 @@ public class CategoriaControlForm extends javax.swing.JDialog {
                 CategoriaForm abrir = new CategoriaForm(null, true, categoria);
                 abrir.setTitle("Editar Categoría");
                 abrir.setVisible(true);
+                limpiarTxtBuscar();
                 cargarTabla();
             }
         } catch (Exception ex) {
