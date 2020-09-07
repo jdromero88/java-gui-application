@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.Categoria;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -29,7 +30,7 @@ public class CategoriaController {
             while (rs.next()) {                
                 Categoria categoria = new Categoria();
                 categoria.setId(rs.getInt("id"));
-                categoria.setNombre(rs.getString("nombre"));
+                categoria.setNombre(StringUtils.capitalize(rs.getString("nombre")));
                 categorias.add(categoria);
             }
             return categorias;
@@ -40,7 +41,29 @@ public class CategoriaController {
         }
     }
     
-    public static Categoria get(String nombre) throws Exception{
+    public static Categoria get(int id) throws Exception{
+        String query = "SELECT * FROM categoria WHERE id = ?";
+        Connection connection = DBUtil.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Categoria categoria = new Categoria();
+                categoria.setId(rs.getInt("id"));
+                categoria.setNombre(rs.getString("nombre"));
+                return categoria;
+            } else{
+                rs.close();
+                return null;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally{
+            DBUtil.closeConnection();
+        }
+    }
+    
+    public static Categoria getByName(String nombre) throws Exception{
         String query = "SELECT * FROM categoria WHERE nombre = ?";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
@@ -60,10 +83,10 @@ public class CategoriaController {
         } finally{
             DBUtil.closeConnection();
         }
-    }
+    }    
     
     public static void add(Categoria categoria) throws Exception{
-        String query = "INSERT INTO categoria (nombre, created_at, updated_at) VALUES (?, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP())";
+        String query = "INSERT INTO categoria (nombre, created_at, updated_at) VALUES (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
             ps.setString(1, categoria.getNombre());
@@ -78,12 +101,12 @@ public class CategoriaController {
     public static void update(Categoria categoria) throws Exception{
         String query = "UPDATE categoria SET "
                 + "nombre = ?, "
-                + "updated_at = CURRENT_TIMESTAMP(),"
+                + "updated_at = CURRENT_TIMESTAMP "
                 + "WHERE id = ?";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
             ps.setString(1, categoria.getNombre());
-            ps.setLong(3, categoria.getId());
+            ps.setLong(2, categoria.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             System.err.println("Algo paso en el update: " + e);

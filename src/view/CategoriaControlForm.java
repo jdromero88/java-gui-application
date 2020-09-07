@@ -13,14 +13,15 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Categoria;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author jodarove
  */
 public class CategoriaControlForm extends javax.swing.JDialog {
-    int valorGrilla = -1;
-    Categoria categoria;
+    Categoria categoria = null;
+//    private int filaSeleccionada = -1;
     /**
      * Creates new form CategoriaControlForm
      */
@@ -86,11 +87,6 @@ public class CategoriaControlForm extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
-            }
-        });
-        tblCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tblCategoriasMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(tblCategorias);
@@ -228,16 +224,19 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         cerrar();
     }//GEN-LAST:event_btnCerrarActionPerformed
-
-    private void tblCategoriasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriasMousePressed
-        valorGrilla = tblCategorias.rowAtPoint(evt.getPoint());
-        try {
-            seleccionarCategoria(valorGrilla);
-        } catch (Exception e) {
-            System.err.println("No pude seleccionar ninguna categoría: " + e);
+ 
+    private Boolean seleccionarCategoria() throws Exception{
+        int filaSeleccionada = tblCategorias.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(rootPane, "No hay categoría seleccionada", "Información", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else{
+            String valorCelda = (String)tblCategorias.getValueAt(filaSeleccionada, 0);
+            int categoriaId = Integer.valueOf(valorCelda);
+            categoria = CategoriaController.get(categoriaId);
+            return true;
         }
-    }//GEN-LAST:event_tblCategoriasMousePressed
-
+    }
     
     private void agregar(){
         CategoriaForm abrir = new CategoriaForm(null, true);
@@ -249,45 +248,38 @@ public class CategoriaControlForm extends javax.swing.JDialog {
             Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+  
     private void editar(){
-        if (valorGrilla > -1 ) {
-            CategoriaForm abrir = new CategoriaForm(null, true);
-            abrir.setTitle("Editar Categoría");
-            abrir.setVisible(true);
-            try {
+        System.out.println(StringUtils.capitalize("test"));
+        try {
+            if (seleccionarCategoria()) {
+                // desde editar pasamos el objeto categoria para saber cual objeto actualizar.
+                CategoriaForm abrir = new CategoriaForm(null, true, categoria);
+                abrir.setTitle("Editar Categoría");
+                abrir.setVisible(true);
                 cargarTabla();
-            } catch (Exception ex) {
-                Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecciona categoría para editar", "Información", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private void eliminar(){
-        if (valorGrilla > -1 ) {
-            try {
+        try {
+            if (seleccionarCategoria()) {
                 CategoriaController.delete(categoria);
                 JOptionPane.showMessageDialog(rootPane, "Categoría eliminada!", "Información", JOptionPane.INFORMATION_MESSAGE);
                 cargarTabla();
-            } catch (Exception ex) {
-                Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else{
-            JOptionPane.showMessageDialog(rootPane, "Selecciona categoría para eliminar", "Información", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private void cerrar(){
         dispose();
     }
-
-    private void seleccionarCategoria(int valor) throws Exception{
-        String categoriaNombre = (String)tblCategorias.getValueAt(valor, 1);
-        System.out.println(categoriaNombre);
-        categoria = CategoriaController.get(categoriaNombre);
-    }
+    
     private void cargarTabla() throws Exception{
         String[] titulos = {"Código", "Nombre"};
         String[] registro = new String[2];
