@@ -10,7 +10,6 @@ import database.DBUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.Categoria;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +29,7 @@ public class CategoriaController {
             while (rs.next()) {                
                 Categoria categoria = new Categoria();
                 categoria.setId(rs.getInt("id"));
-                categoria.setNombre(StringUtils.capitalize(rs.getString("nombre")));
+                categoria.setNombre(rs.getString("nombre"));
                 categorias.add(categoria);
             }
             return categorias;

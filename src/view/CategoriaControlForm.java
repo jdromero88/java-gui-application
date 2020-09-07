@@ -43,7 +43,7 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         ButtonGroup group = new ButtonGroup();
         group.add(rBtnCodigo);
         group.add(rBtnNombre);
-                
+
         // al abrir rBtnNombre seleccionado por defecto
         rBtnNombre.setSelected(true);
         try {
@@ -67,7 +67,12 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCategorias = new javax.swing.JTable();
+        tblCategorias = // desactivar edicion de celdas
+        tblCategorias = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         jPanel3 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -271,9 +276,11 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         try {
             // si radioButton nombre esta seleccionado buscamos por nombre
             if(rBtnNombre.isSelected()){
-                rf = RowFilter.regexFilter(textoBuscado, 1);
+                // (?i) inicia modo case insentivo
+                // (?-i) termina modo case sensitivo
+                rf = RowFilter.regexFilter("(?i)" + textoBuscado, 1);
             }
-            // si radioButton nombre esta seleccionado buscamos por id
+            // si radioButton codigo esta seleccionado buscamos por id
             if(rBtnCodigo.isSelected()){
                 rf = RowFilter.regexFilter(textoBuscado, 0);
             }            
