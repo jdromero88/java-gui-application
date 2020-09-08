@@ -18,8 +18,8 @@ import model.Categoria;
  * @author jodarove
  */
 public class CategoriaController {
+    // Traemos todas las categoras y los guardamos en un arraylist como objetos
     public static ArrayList<Categoria> getAll() throws Exception{
-        // nuevo codigo
         String query = "SELECT * FROM categoria ORDER BY id";
         ArrayList<Categoria> categorias = new ArrayList<>();
         Connection connection = DBUtil.getConnection();
@@ -33,6 +33,7 @@ public class CategoriaController {
             }
             return categorias;
         } catch (Exception e) {
+            System.err.println("Problema al Object-relational mapping en CategoriaController : " + e);
             throw e;
         } finally{
             DBUtil.closeConnection();
@@ -84,7 +85,8 @@ public class CategoriaController {
     }    
     
     public static void add(Categoria categoria) throws Exception{
-        String query = "INSERT INTO categoria (nombre, created_at, updated_at) VALUES (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        String query = "INSERT INTO categoria (nombre, created_at, updated_at) "
+                + "VALUES (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
             ps.setString(1, categoria.getNombre());
