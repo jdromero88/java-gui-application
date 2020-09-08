@@ -16,19 +16,17 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Categoria;
-import org.apache.commons.lang3.StringUtils;
-
 /**
  *
  * @author jodarove
  */
-public class CategoriaControlForm extends javax.swing.JDialog {
+public class CategoriaControlForm extends javax.swing.JDialog{
     private Categoria categoria = null;
     private final String[] titulos = {"Código", "Nombre"};
     // necesario para filtar
     private TableRowSorter<DefaultTableModel> sorter;
-    private DefaultTableModel modelo;
-
+    private DefaultTableModel modelo;    
+    
     /**
      * Creates new form CategoriaControlForm
      */
@@ -289,7 +287,7 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     private void rBtnNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_rBtnNombreFocusGained
         limpiarTxtBuscar();
     }//GEN-LAST:event_rBtnNombreFocusGained
-    
+        
     private void limpiarTxtBuscar(){
         txtBuscar.setText(null);
         txtBuscar.requestFocus();

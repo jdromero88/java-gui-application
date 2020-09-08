@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.Categoria;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
