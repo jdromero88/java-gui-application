@@ -46,6 +46,7 @@ public class CategoriaControlForm extends javax.swing.JDialog {
 
         // al abrir rBtnNombre seleccionado por defecto
         rBtnNombre.setSelected(true);
+        txtBuscar.requestFocus();
         try {
             cargarTabla();
         } catch (Exception ex) {
@@ -187,9 +188,19 @@ public class CategoriaControlForm extends javax.swing.JDialog {
 
         rBtnCodigo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         rBtnCodigo.setText("Cod.");
+        rBtnCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                rBtnCodigoFocusGained(evt);
+            }
+        });
 
         rBtnNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         rBtnNombre.setText("Nombre");
+        rBtnNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                rBtnNombreFocusGained(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -270,9 +281,23 @@ public class CategoriaControlForm extends javax.swing.JDialog {
         String textoBuscado = txtBuscar.getText();
         filtrarTabla(textoBuscado);
     }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void rBtnCodigoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_rBtnCodigoFocusGained
+        limpiarTxtBuscar();
+    }//GEN-LAST:event_rBtnCodigoFocusGained
+
+    private void rBtnNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_rBtnNombreFocusGained
+        limpiarTxtBuscar();
+    }//GEN-LAST:event_rBtnNombreFocusGained
     
     private void limpiarTxtBuscar(){
         txtBuscar.setText(null);
+        txtBuscar.requestFocus();
+        try {
+            cargarTabla();
+        } catch (Exception ex) {
+            Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     private void filtrarTabla(String textoBuscado){
         RowFilter<DefaultTableModel, Object> rf = null;
@@ -335,9 +360,13 @@ public class CategoriaControlForm extends javax.swing.JDialog {
     private void eliminar(){
         try {
             if (seleccionarCategoria()) {
-                CategoriaController.delete(categoria);
-                JOptionPane.showMessageDialog(rootPane, "Categoría eliminada!", "Información", JOptionPane.INFORMATION_MESSAGE);
-                cargarTabla();
+                if(JOptionPane.showConfirmDialog(this, "Esta seguro que desea eliminar la categoría?") == 0){
+                    CategoriaController.delete(categoria);
+                    JOptionPane.showMessageDialog(rootPane, "Categoría eliminada!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    cargarTabla();
+                }
+                tblCategorias.clearSelection();
+                txtBuscar.requestFocus();
             }
         } catch (Exception ex) {
             Logger.getLogger(CategoriaControlForm.class.getName()).log(Level.SEVERE, null, ex);

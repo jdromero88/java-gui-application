@@ -6,6 +6,8 @@
 
 package view;
 
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -102,6 +104,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOpenTestingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenTestingActionPerformed
+        System.out.println(JOptionPane.showConfirmDialog(this, "you want this?"));
         FormTesting ventana = new FormTesting();
         ventana.setVisible(true);
     }//GEN-LAST:event_btnOpenTestingActionPerformed
