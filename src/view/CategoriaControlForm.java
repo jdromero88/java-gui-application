@@ -75,9 +75,13 @@ public class CategoriaControlForm extends javax.swing.JDialog{
         rBtnNombre = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("test");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
         jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setToolTipText("");
+        jPanel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Buscar por:");
@@ -188,6 +192,7 @@ public class CategoriaControlForm extends javax.swing.JDialog{
 
         rBtnNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         rBtnNombre.setText("Nombre");
+        rBtnNombre.setToolTipText("Nombre");
         rBtnNombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 rBtnNombreFocusGained(evt);
