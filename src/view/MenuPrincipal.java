@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author jodarove
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-
+    private static final String CLICK_CAJA_V2 = " | ClickCaja V 2.0";
     /**
      * Creates new form MenuPrincipal
      */
@@ -38,6 +38,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuItemSalir = new javax.swing.JMenuItem();
         menuConfiguracion = new javax.swing.JMenu();
         menuItemCategoria = new javax.swing.JMenuItem();
+        menuItemDepartamento = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ClickCaja V2");
@@ -79,6 +80,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         menuConfiguracion.add(menuItemCategoria);
 
+        menuItemDepartamento.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        menuItemDepartamento.setText("Departamento");
+        menuItemDepartamento.setToolTipText("Crear, Buscar, Editar, Eliminar Departamentos");
+        menuItemDepartamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemDepartamentoActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(menuItemDepartamento);
+
         jMenuBar1.add(menuConfiguracion);
 
         setJMenuBar(jMenuBar1);
@@ -115,8 +126,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void menuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCategoriaActionPerformed
         CategoriaControlForm abrir = new CategoriaControlForm(this, true);
+        abrir.setTitle("Control Categorias" + CLICK_CAJA_V2);
         abrir.setVisible(true);
     }//GEN-LAST:event_menuItemCategoriaActionPerformed
+
+    private void menuItemDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDepartamentoActionPerformed
+        System.out.println(evt.ACTION_PERFORMED);
+        if (evt.ACTION_PERFORMED == 1001) {
+            DepartamentoControlForm abrir = new DepartamentoControlForm(this, true);
+            abrir.setTitle("Control Departamentos" + CLICK_CAJA_V2);
+            abrir.setVisible(true);
+        }
+    }//GEN-LAST:event_menuItemDepartamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,6 +180,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuConfiguracion;
     private javax.swing.JMenuItem menuItemCategoria;
+    private javax.swing.JMenuItem menuItemDepartamento;
     private javax.swing.JMenuItem menuItemSalir;
     // End of variables declaration//GEN-END:variables
 }

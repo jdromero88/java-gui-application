@@ -1,23 +1,61 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
+
+import controller.DepartamentoController;
+import java.util.ArrayList;
+import javax.swing.ButtonGroup;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.Departamento;
 
 /**
  *
  * @author jodarove
  */
 public class DepartamentoControlForm extends javax.swing.JDialog {
-
+    private Departamento departamento = null;
+    private final String[] TITULOS = {"Codigo", "Nombre"};
+    //Para filtrar
+    private TableRowSorter<DefaultTableModel> sorter;
+    private DefaultTableModel modelo;
     /**
      * Creates new form DepartamentoControlForm
      */
     public DepartamentoControlForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        // centrar el form
+        setLocationRelativeTo(null);
+        
+        // Agrupa los botons
+        ButtonGroup group = new ButtonGroup();
+        group.add(rBtnCodigo);
+        group.add(rBtnNombre);
+        
+        // Al abrir rBtnSeleccionado y txtBuscar gana el foco
+        rBtnNombre.setSelected(true);
+        txtBuscar.requestFocus();
+        
+        try {
+//            cargarTabla();
+        } catch (Exception e) {
+        }
+    }
+    
+    private void cargarTabla() throws Exception{
+        String[] registro = new String[2];
+        // Declaramos un arraylist de tipo Departamento
+        ArrayList<Departamento> departamentos;
+        modelo = new DefaultTableModel(TITULOS, 0);
+        try {
+            // asignamos todos los departamentos a el arraylist departamentos
+            departamentos = DepartamentoController.getAll();
+            for (Departamento departamento : departamentos) {
+                registro[0] = String.valueOf(departamento.getId());
+                registro[1] = departamento.getNombre();
+                modelo.addRow(registro);
+            }
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -33,7 +71,7 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         rBtnCodigo = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        rBtnNombre = new javax.swing.JRadioButton();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDepartamentos = new javax.swing.JTable();
@@ -41,6 +79,7 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         btnAgregar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -56,13 +95,19 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         rBtnCodigo.setText("Cod.");
         rBtnCodigo.setToolTipText("Codigo");
 
-        jRadioButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jRadioButton1.setText("Nombre");
-        jRadioButton1.setToolTipText("Nombre");
+        rBtnNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        rBtnNombre.setText("Nombre");
+        rBtnNombre.setToolTipText("Nombre");
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtBuscar.setToolTipText("Ingrese texto para buscar...");
 
+        // desactivar edicion de celdas
+        tblDepartamentos = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        }
         tblDepartamentos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tblDepartamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,7 +135,7 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rBtnCodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton1)
+                        .addComponent(rBtnNombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -102,7 +147,7 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(rBtnCodigo)
-                    .addComponent(jRadioButton1)
+                    .addComponent(rBtnNombre)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,6 +170,9 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         btnEliminar.setText("Eliminar");
         btnEliminar.setToolTipText("Eliminar Departamento");
 
+        btnImprimir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnImprimir.setText("Imprimir");
+
         btnCerrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnCerrar.setText("Cerrar");
         btnCerrar.setToolTipText("Cerrar");
@@ -136,10 +184,11 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,6 +199,8 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
                 .addComponent(btnEditar)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnImprimir)
                 .addGap(18, 18, 18)
                 .addComponent(btnCerrar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -209,13 +260,14 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rBtnCodigo;
+    private javax.swing.JRadioButton rBtnNombre;
     private javax.swing.JTable tblDepartamentos;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables

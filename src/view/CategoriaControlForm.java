@@ -15,8 +15,9 @@ import model.Categoria;
  * @author jodarove
  */
 public class CategoriaControlForm extends javax.swing.JDialog{
+    private static final String CLICK_CAJA_V2 = " | ClickCaja V 2.0";
     private Categoria categoria = null;
-    private final String[] titulos = {"Código", "Nombre"};
+    private final String[] TITULOS = {"Código", "Nombre"};
     // necesario para filtar
     private TableRowSorter<DefaultTableModel> sorter;
     private DefaultTableModel modelo;    
@@ -75,7 +76,6 @@ public class CategoriaControlForm extends javax.swing.JDialog{
         rBtnNombre = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("test");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -330,7 +330,7 @@ public class CategoriaControlForm extends javax.swing.JDialog{
     
     private void agregar(){
         CategoriaForm abrir = new CategoriaForm(null, true);
-        abrir.setTitle("Agregar Categoría");
+        abrir.setTitle("Agregar Categoría" + CLICK_CAJA_V2);
         abrir.setVisible(true);
         try {
             cargarTabla();
@@ -344,7 +344,7 @@ public class CategoriaControlForm extends javax.swing.JDialog{
             if (seleccionarCategoria()) {
                 // desde editar pasamos el objeto categoria para saber cual objeto actualizar.
                 CategoriaForm abrir = new CategoriaForm(null, true, categoria);
-                abrir.setTitle("Editar Categoría");
+                abrir.setTitle("Editar Categoría" + CLICK_CAJA_V2);
                 abrir.setVisible(true);
                 limpiarTxtBuscar();
                 cargarTabla();
@@ -378,7 +378,7 @@ public class CategoriaControlForm extends javax.swing.JDialog{
         String[] registro = new String[2];
         ArrayList<Categoria> categorias;
         // instanciamos para la tabla
-        modelo = new DefaultTableModel(titulos, 0);
+        modelo = new DefaultTableModel(TITULOS, 0);
         try {
             categorias = CategoriaController.getAll();
             for (Categoria categoria : categorias) {

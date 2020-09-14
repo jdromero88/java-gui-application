@@ -12,7 +12,7 @@ package model;
  */
 public class Ciudad {
     private String nombre;
-    
+    private int departamentoId;
     public Ciudad() {
     }
     
