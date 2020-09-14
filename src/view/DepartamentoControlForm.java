@@ -74,7 +74,12 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         rBtnNombre = new javax.swing.JRadioButton();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblDepartamentos = new javax.swing.JTable();
+        tblDepartamentos = // desactivar edicion de celdas
+        tblDepartamentos = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         jPanel3 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -102,12 +107,6 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtBuscar.setToolTipText("Ingrese texto para buscar...");
 
-        // desactivar edicion de celdas
-        tblDepartamentos = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        }
         tblDepartamentos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tblDepartamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
