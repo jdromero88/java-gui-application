@@ -131,7 +131,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemCategoriaActionPerformed
 
     private void menuItemDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDepartamentoActionPerformed
-        System.out.println(evt.ACTION_PERFORMED);
         if (evt.ACTION_PERFORMED == 1001) {
             DepartamentoControlForm abrir = new DepartamentoControlForm(this, true);
             abrir.setTitle("Control Departamentos" + CLICK_CAJA_V2);

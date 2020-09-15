@@ -12,6 +12,7 @@ import model.Departamento;
  * @author jodarove
  */
 public class DepartamentoControlForm extends javax.swing.JDialog {
+    private static final String CLICK_CAJA_V2 = " | ClickCaja V 2.0";
     private Departamento departamento = null;
     private final String[] TITULOS = {"Codigo", "Nombre"};
     //Para filtrar
@@ -56,6 +57,16 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
             }
         } catch (Exception e) {
         }
+    }
+    
+    private void agregar(){
+        DepartamentoForm abrir = new DepartamentoForm(null, true);
+        abrir.setTitle("Agregar Departamento " + CLICK_CAJA_V2);
+        abrir.setVisible(true);
+    }
+    
+    private void cerrar(){
+        this.dispose();
     }
 
     /**
@@ -160,6 +171,11 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         btnAgregar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.setToolTipText("Agregar Departamento");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnEditar.setText("Editar");
@@ -175,6 +191,11 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         btnCerrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnCerrar.setText("Cerrar");
         btnCerrar.setToolTipText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -211,6 +232,18 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        if (evt.ACTION_PERFORMED == 1001) {
+            agregar();
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        if(evt.ACTION_PERFORMED == 1001){
+            cerrar();
+        }
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
     /**
      * @param args the command line arguments

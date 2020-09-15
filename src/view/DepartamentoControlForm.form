@@ -226,6 +226,9 @@
                 <Property name="text" type="java.lang.String" value="Agregar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Agregar Departamento"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnEditar">
               <Properties>
@@ -261,6 +264,9 @@
                 <Property name="text" type="java.lang.String" value="Cerrar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Cerrar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
