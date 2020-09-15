@@ -6,12 +6,14 @@
 
 package view;
 
+import model.Departamento;
+
 /**
  *
  * @author jodarove
  */
 public class DepartamentoForm extends javax.swing.JDialog {
-
+    private Departamento departamento = new Departamento();
     /**
      * Creates new form DepartamentoForm
      */
@@ -20,6 +22,12 @@ public class DepartamentoForm extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
     }
+    public DepartamentoForm(java.awt.Frame parent, boolean modal, Departamento departamento) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+        this.departamento = departamento;
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.

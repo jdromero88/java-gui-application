@@ -2,7 +2,10 @@ package view;
 
 import controller.DepartamentoController;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Departamento;
@@ -59,10 +62,60 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         }
     }
     
+    private Boolean seleccionarDepartamento() throws Exception{
+        int filaSeleccionada = tblDepartamentos.getSelectedRow();
+        if(filaSeleccionada == -1){
+            JOptionPane.showMessageDialog(rootPane, "No hay departamento seleccionado", "Informacion", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else{
+            String valorCelda = (String)tblDepartamentos.getValueAt(filaSeleccionada, 0);
+            int departamentoId = Integer.valueOf(valorCelda);
+            departamento = DepartamentoController.get(departamentoId);
+            return true;
+        }
+    }
+    private void limpiarTxtBuscar(){
+        txtBuscar.setText("");
+        txtBuscar.requestFocus();
+        try {
+            cargarTabla();
+        } catch (Exception e) {
+            Logger.getLogger(DepartamentoControlForm.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
     private void agregar(){
         DepartamentoForm abrir = new DepartamentoForm(null, true);
         abrir.setTitle("Agregar Departamento " + CLICK_CAJA_V2);
         abrir.setVisible(true);
+    }
+    
+    private void editar(){
+        try {
+            if(seleccionarDepartamento()){
+                DepartamentoForm abrir = new DepartamentoForm(null, true, departamento);
+                abrir.setTitle("Editar Departamento" + CLICK_CAJA_V2);
+                abrir.setVisible(true);
+                limpiarTxtBuscar();
+            }   cargarTabla();
+        } catch (Exception e) {
+            Logger.getLogger(DepartamentoControlForm.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    private void eliminar(){
+        try {
+            if (seleccionarDepartamento()) {
+                if (JOptionPane.showConfirmDialog(this, "Esta seguro que desea eliminar el departamento?") == 0) {
+                    DepartamentoController.delete(departamento);
+                    JOptionPane.showMessageDialog(rootPane, "Departamento eliminado", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    cargarTabla();
+                }
+                tblDepartamentos.clearSelection();
+                txtBuscar.requestFocus();
+            }
+        } catch (Exception e) {
+            Logger.getLogger(DepartamentoControlForm.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
     
     private void cerrar(){
@@ -180,10 +233,20 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         btnEditar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setToolTipText("Editar Departamento");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setToolTipText("Eliminar Departamento");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnImprimir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnImprimir.setText("Imprimir");
@@ -234,16 +297,20 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if (evt.ACTION_PERFORMED == 1001) {
-            agregar();
-        }
+        agregar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-        if(evt.ACTION_PERFORMED == 1001){
-            cerrar();
-        }
+        cerrar();
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        editar();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
