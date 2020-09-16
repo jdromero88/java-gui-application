@@ -21,12 +21,17 @@ public class DepartamentoForm extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        lblTitulo.setText("Agregar Departamento");
+        btnOk.setText("Agregar");
     }
     public DepartamentoForm(java.awt.Frame parent, boolean modal, Departamento departamento) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         this.departamento = departamento;
+        lblTitulo.setText("Editar Departamento");
+        btnOk.setText("Guardar");
+        txtNombre.setText(departamento.getNombre());
     }    
 
     /**
@@ -38,18 +43,43 @@ public class DepartamentoForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        lblTitulo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        btnOk = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(469, 112));
+        setPreferredSize(new java.awt.Dimension(469, 112));
+
+        lblTitulo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("jLabel1");
+        getContentPane().add(lblTitulo, java.awt.BorderLayout.PAGE_START);
+
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Nombre:");
+        jPanel1.add(jLabel1);
+
+        txtNombre.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtNombre.setText("jTextField1");
+        jPanel1.add(txtNombre);
+
+        btnOk.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnOk.setText("jButton1");
+        jPanel1.add(btnOk);
+
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Cierra ventana.");
+        jPanel1.add(btnCancelar);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -97,5 +127,11 @@ public class DepartamentoForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnOk;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

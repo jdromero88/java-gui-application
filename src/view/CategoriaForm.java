@@ -25,6 +25,7 @@ public class CategoriaForm extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         btnOk.setText("Agregar");
+        lblTitulo.setText("Agregar Categoría");
     }
     
     //Pasamos Categoria como ultimo parametro.
@@ -33,6 +34,7 @@ public class CategoriaForm extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         btnOk.setText("Guardar");
+        lblTitulo.setText("Editar Categoría");
         //seteamos la caja de texto
         txtNombre.setText(categoria.getNombre());
         //asignamos la categoria que recibimos del tblCategoria
@@ -48,7 +50,7 @@ public class CategoriaForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
@@ -58,10 +60,10 @@ public class CategoriaForm extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Agregar Categoría");
-        getContentPane().add(jLabel2, java.awt.BorderLayout.PAGE_START);
+        lblTitulo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("titulo");
+        getContentPane().add(lblTitulo, java.awt.BorderLayout.PAGE_START);
 
         jPanel1.setMinimumSize(new java.awt.Dimension(469, 83));
         jPanel1.setPreferredSize(new java.awt.Dimension(469, 83));
@@ -89,6 +91,7 @@ public class CategoriaForm extends javax.swing.JDialog {
 
         btnCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Cierra ventana.");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -202,8 +205,8 @@ public class CategoriaForm extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnOk;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
