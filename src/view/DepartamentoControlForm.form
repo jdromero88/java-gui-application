@@ -123,6 +123,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Ingrese texto para buscar..."/>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarKeyReleased"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
               <AuxValues>

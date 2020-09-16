@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Departamento;
@@ -30,6 +31,8 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         // centrar el form
         setLocationRelativeTo(null);
         
+//        Desactivamos boton eliminar
+        btnEliminar.setEnabled(false);
         // Agrupa los botons
         ButtonGroup group = new ButtonGroup();
         group.add(rBtnCodigo);
@@ -40,7 +43,7 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         txtBuscar.requestFocus();
         
         try {
-//            cargarTabla();
+            cargarTabla();
         } catch (Exception e) {
         }
     }
@@ -59,7 +62,32 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
                 modelo.addRow(registro);
             }
         } catch (Exception e) {
+            System.err.println("Error al obtener los departamentos para cargar la tabla: " + e);
         }
+        sorter = new TableRowSorter<>(modelo);
+        tblDepartamentos.setRowSorter(sorter);
+        tblDepartamentos.setModel(modelo);
+    }
+    
+    private void filtrarTabla(String textoBuscado){
+        RowFilter<DefaultTableModel, Object> rf = null;
+        try {
+            if(rBtnNombre.isSelected()){
+                // (?i) inicia modo case insentivo
+                // (?-i) termina modo case sensitivo
+                rf = RowFilter.regexFilter("(?i)" + textoBuscado, 1);
+            }
+            if(rBtnCodigo.isSelected()){
+                // (?i) inicia modo case insentivo
+                // (?-i) termina modo case sensitivo
+                rf = RowFilter.regexFilter(textoBuscado, 0);
+            }            
+            
+        } catch (Exception e) {
+            System.err.println("Algo paso en filtrar tabla: " + e);
+            return;
+        }
+        sorter.setRowFilter(rf);
     }
     
     private Boolean seleccionarDepartamento() throws Exception{
@@ -75,7 +103,7 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         }
     }
     private void limpiarTxtBuscar(){
-        txtBuscar.setText("");
+        txtBuscar.setText(null);
         txtBuscar.requestFocus();
         try {
             cargarTabla();
@@ -96,7 +124,8 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
                 abrir.setTitle("Editar Departamento" + CLICK_CAJA_V2);
                 abrir.setVisible(true);
                 limpiarTxtBuscar();
-            }   cargarTabla();
+                cargarTabla();
+            }   
         } catch (Exception e) {
             Logger.getLogger(DepartamentoControlForm.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -170,6 +199,11 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtBuscar.setToolTipText("Ingrese texto para buscar...");
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
         tblDepartamentos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tblDepartamentos.setModel(new javax.swing.table.DefaultTableModel(
@@ -311,6 +345,11 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        String textoBuscado = txtBuscar.getText();
+        filtrarTabla(textoBuscado);
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
     /**
      * @param args the command line arguments

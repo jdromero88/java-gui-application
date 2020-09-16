@@ -310,6 +310,7 @@ public class CategoriaControlForm extends javax.swing.JDialog{
                 rf = RowFilter.regexFilter(textoBuscado, 0);
             }            
         } catch (java.util.regex.PatternSyntaxException e) {
+            System.err.println("Algo paso en filtrar tabla: " + e);
             return;
         }
         sorter.setRowFilter(rf);

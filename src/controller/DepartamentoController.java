@@ -15,7 +15,7 @@ public class DepartamentoController {
     // Treamos todos los departamentos y los guardamos en un arraylist
     // como objetos.
     public static ArrayList<Departamento> getAll() throws Exception{
-        String query = "SELECT * FROM departamento ORDER BY id";
+        String query = "SELECT * FROM departamentos ORDER BY id";
         ArrayList<Departamento> departamentos = new ArrayList<>();
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query);
@@ -36,7 +36,7 @@ public class DepartamentoController {
     }
     
     public static Departamento get(int id) throws Exception{
-        String query = "SELECT * FROM departamento WHERE id = ?";
+        String query = "SELECT * FROM departamentos WHERE id = ?";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
             ps.setInt(1, id);
@@ -59,7 +59,7 @@ public class DepartamentoController {
     }
     
     public static Departamento getByName(String nombre) throws Exception{
-        String query = "SELECT * FROM departamento WHERE nombre = ?";
+        String query = "SELECT * FROM departamentos WHERE nombre = ?";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
             ps.setString(1, nombre);
@@ -82,7 +82,7 @@ public class DepartamentoController {
     }
     
     public static void add(Departamento departamento) throws Exception{
-        String query = "INSERT INTO departamento (nombre, created_at, updated_at) "
+        String query = "INSERT INTO departamentos (nombre, created_at, updated_at) "
                 + "VALUES (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
@@ -97,7 +97,7 @@ public class DepartamentoController {
     }
     
     public static void update(Departamento departamento) throws Exception{
-        String query = "UPDATE departamento SET "
+        String query = "UPDATE departamentos SET "
                 + "nombre = ?,"
                 + "update_at = CURRENT_TIMESTAMP"
                 + "WHERE ID = ?";
@@ -115,7 +115,7 @@ public class DepartamentoController {
     }
     
     public static void delete(Departamento departamento) throws Exception{
-        String query = "DELETE FROM departamento WHERE id = ?";
+        String query = "DELETE FROM departamentos WHERE id = ?";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
             ps.setLong(1, departamento.getId());
