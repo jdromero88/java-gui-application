@@ -99,15 +99,15 @@ public class DepartamentoController {
     public static void update(Departamento departamento) throws Exception{
         String query = "UPDATE departamentos SET "
                 + "nombre = ?,"
-                + "update_at = CURRENT_TIMESTAMP"
-                + "WHERE ID = ?";
+                + "updated_at = CURRENT_TIMESTAMP "
+                + "WHERE id = ?";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)){
             ps.setString(1, departamento.getNombre());
             ps.setLong(2, departamento.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.err.println("get() Problema al hacer mapping en DepartamentoController: " + e);
+            System.err.println("problema al hacer update en DepartamentoController: " + e);
             throw e;
         } finally{
             DBUtil.closeConnection();

@@ -31,7 +31,8 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         // centrar el form
         setLocationRelativeTo(null);
         
-//        Desactivamos boton eliminar
+//        Desactivamos boton agregar y eliminar
+        btnAgregar.setEnabled(false);
         btnEliminar.setEnabled(false);
         // Agrupa los botons
         ButtonGroup group = new ButtonGroup();
@@ -115,6 +116,11 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         DepartamentoForm abrir = new DepartamentoForm(null, true);
         abrir.setTitle("Agregar Departamento " + CLICK_CAJA_V2);
         abrir.setVisible(true);
+        try {
+            cargarTabla();
+        } catch (Exception e) {
+            System.err.println("Algo paso al intentar cargar la tabla despues de agreagar: " + e);
+        }
     }
     
     private void editar(){

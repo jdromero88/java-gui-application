@@ -6,7 +6,10 @@
 
 package view;
 
+import controller.DepartamentoController;
+import javax.swing.JOptionPane;
 import model.Departamento;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -32,7 +35,44 @@ public class DepartamentoForm extends javax.swing.JDialog {
         lblTitulo.setText("Editar Departamento");
         btnOk.setText("Guardar");
         txtNombre.setText(departamento.getNombre());
+    }
+    
+    private boolean validarDatos(){
+        String nombre = txtNombre.getText();
+        if (nombre == null || nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos.", "Campos incompletos",  JOptionPane.INFORMATION_MESSAGE);
+            txtNombre.requestFocus();
+            return false;
+        }else{
+            return true;
+        }
+    }
+    private void setDatos(){
+        departamento.setNombre(StringUtils.capitalize(txtNombre.getText()));
+    }
+    private void agregar(){
+        try {
+            DepartamentoController.add(departamento);
+            JOptionPane.showMessageDialog(rootPane, "Departamento agregado!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (Exception e) {
+            System.err.println("Error al agregar Departamento: " + e);
+        }
+    }
+    
+    private void editar(){
+        try {
+            DepartamentoController.update(departamento);
+            JOptionPane.showMessageDialog(rootPane, "Departamento Actualizado!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (Exception e) {
+            System.err.println("Error al editar Departamento: " + e);
+        }
     }    
+    
+    private void cancelar(){
+        dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,22 +107,46 @@ public class DepartamentoForm extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
 
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        txtNombre.setText("jTextField1");
         jPanel1.add(txtNombre);
 
         btnOk.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnOk.setText("jButton1");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnOk);
 
         btnCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("Cierra ventana.");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCancelar);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        if (validarDatos()) {
+            setDatos();
+            if(btnOk.getText().equals("Agregar")){
+                agregar();
+            } else {
+                editar();
+            }
+        }
+    }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        cancelar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
