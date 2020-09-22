@@ -88,7 +88,7 @@ public class CiudadController {
         }
     }
     
-    public static void add(Ciudad ciudad) throws Exception{
+    public static void add(Ciudad ciudad) throws Exception {
         String query = "INSERT INTO ciudads (nombre, departamento_id, created_at, updated_at) "
                 + "VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         Connection connection = DBUtil.getConnection();
@@ -99,6 +99,38 @@ public class CiudadController {
         } catch (Exception e) {
             System.err.println("CiudadController problema al hacer add(): " + e);
             throw e;
+        } finally{
+            DBUtil.closeConnection();
+        }
+    }
+    
+    public static void update(Ciudad ciudad) throws Exception {
+        String query = "UPDATE ciudads SET "
+                + "nombre = ?, "
+                + "departamento_id = ?, "
+                + "updated_at = CURRENT_TIMESTAMP "
+                + "WHERE id = ?";
+        Connection connection = DBUtil.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setString(1, ciudad.getNombre());
+            ps.setLong(2, ciudad.getDepartamentoId());
+            ps.setLong(3, ciudad.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("problema al hacer update en CiudadController: " + e);
+            throw e;
+        } finally {
+            DBUtil.closeConnection();
+        }
+    }
+    public static void delete(Ciudad ciudad) throws Exception{
+        String query = "DELETE FROM ciudads WHERE id = ?";
+        Connection connection = DBUtil.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setLong(1, ciudad.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("Algo paso en el delete de la ciudad: " + e);
         } finally{
             DBUtil.closeConnection();
         }
