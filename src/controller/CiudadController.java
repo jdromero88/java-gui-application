@@ -63,4 +63,44 @@ public class CiudadController {
             DBUtil.closeConnection();
         }
     }
+    
+    public static Ciudad getByName(String nombre) throws Exception{
+        String query = "SELECT * FROM ciudads WHERE nombre = ?";
+        Connection connection = DBUtil.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Ciudad ciudad = new Ciudad();
+                ciudad.setId(rs.getInt("id"));
+                ciudad.setNombre(rs.getString("nombre"));
+                ciudad.setDepartamentoId(rs.getInt("departamento_id"));
+                return ciudad;
+            } else{
+                rs.close();
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Algo paso al hacer get Ciudad by name: " + e);
+            throw e;
+        } finally{
+            DBUtil.closeConnection();
+        }
+    }
+    
+    public static void add(Ciudad ciudad) throws Exception{
+        String query = "INSERT INTO ciudads (nombre, departamento_id, created_at, updated_at) "
+                + "VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        Connection connection = DBUtil.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setString(1, ciudad.getNombre());
+            ps.setInt(2, ciudad.getDepartamentoId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("CiudadController problema al hacer add(): " + e);
+            throw e;
+        } finally{
+            DBUtil.closeConnection();
+        }
+    }
 }
