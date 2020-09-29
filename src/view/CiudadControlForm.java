@@ -6,6 +6,8 @@
 
 package view;
 
+import javax.swing.ButtonGroup;
+
 /**
  *
  * @author jodarove
@@ -18,6 +20,23 @@ public class CiudadControlForm extends javax.swing.JDialog {
     public CiudadControlForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        // centrar el form
+        setLocationRelativeTo(null);
+        // Desactiva el boton eliminar
+        btnEliminar.setEnabled(false);
+        //Agrupar botones
+        ButtonGroup group = new ButtonGroup();
+        group.add(rBtnCodigo);
+        group.add(rBtnNombre);
+        
+        // rBtnNombre seleccionado por defecto y txtBuscar gana el foco
+        rBtnNombre.setSelected(true);
+        txtBuscar.requestFocus();
+        try {
+            // cargarTabla();
+        } catch (Exception e) {
+            System.err.println("Algo paso al cargar tabla al iniciar el form: " + e);
+        }
     }
 
     /**
@@ -115,6 +134,7 @@ public class CiudadControlForm extends javax.swing.JDialog {
         btnAgregar.setToolTipText("Abre formulario para agregar la ciudad");
         btnAgregar.setMaximumSize(new java.awt.Dimension(120, 32));
         btnAgregar.setMinimumSize(new java.awt.Dimension(120, 32));
+        btnAgregar.setPreferredSize(new java.awt.Dimension(120, 32));
 
         btnEditar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnEditar.setText("Editar");

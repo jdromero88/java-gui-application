@@ -39,6 +39,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuConfiguracion = new javax.swing.JMenu();
         menuItemCategoria = new javax.swing.JMenuItem();
         menuItemDepartamento = new javax.swing.JMenuItem();
+        menuItemCiudad = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ClickCaja V2");
@@ -90,6 +91,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         menuConfiguracion.add(menuItemDepartamento);
 
+        menuItemCiudad.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        menuItemCiudad.setText("Ciudad");
+        menuItemCiudad.setToolTipText("Abre Control Ciudades");
+        menuItemCiudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCiudadActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(menuItemCiudad);
+
         jMenuBar1.add(menuConfiguracion);
 
         setJMenuBar(jMenuBar1);
@@ -138,6 +149,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemDepartamentoActionPerformed
 
+    private void menuItemCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCiudadActionPerformed
+        if (evt.ACTION_PERFORMED == 1001) {
+            CiudadControlForm abrir = new CiudadControlForm(this, true);
+            abrir.setTitle("Control Ciudades" + CLICK_CAJA_V2);
+            abrir.setVisible(true);
+        }
+    }//GEN-LAST:event_menuItemCiudadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -179,6 +198,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuConfiguracion;
     private javax.swing.JMenuItem menuItemCategoria;
+    private javax.swing.JMenuItem menuItemCiudad;
     private javax.swing.JMenuItem menuItemDepartamento;
     private javax.swing.JMenuItem menuItemSalir;
     // End of variables declaration//GEN-END:variables
