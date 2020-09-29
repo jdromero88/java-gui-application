@@ -64,11 +64,6 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
                 modelo.addRow(registro);
             });
             
-//            for (Departamento depto : departamentos) {
-//                registro[0] = String.valueOf(depto.getId());
-//                registro[1] = depto.getNombre();
-//                modelo.addRow(registro);
-//            }
         } catch (Exception e) {
             System.err.println("Error al obtener los departamentos para cargar la tabla: " + e);
         }

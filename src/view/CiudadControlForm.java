@@ -65,11 +65,6 @@ public class CiudadControlForm extends javax.swing.JDialog {
                 registro[1] = ciu.getNombre();
                 modelo.addRow(registro);
             });
-//            for (Ciudad ciu : ciudades) {
-//                registro[0] = String.valueOf(ciu.getId());
-//                registro[1] = ciu.getNombre();
-//                modelo.addRow(registro);
-//            }
         } catch (Exception e) {
             System.err.println("Error al obtener las ciudades para cargar la tabla: " + e);
         }
