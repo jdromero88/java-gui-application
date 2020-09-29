@@ -142,19 +142,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemCategoriaActionPerformed
 
     private void menuItemDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDepartamentoActionPerformed
-        if (evt.ACTION_PERFORMED == 1001) {
-            DepartamentoControlForm abrir = new DepartamentoControlForm(this, true);
-            abrir.setTitle("Control Departamentos" + CLICK_CAJA_V2);
-            abrir.setVisible(true);
-        }
+        DepartamentoControlForm abrir = new DepartamentoControlForm(this, true);
+        abrir.setTitle("Control Departamentos" + CLICK_CAJA_V2);
+        abrir.setVisible(true);
     }//GEN-LAST:event_menuItemDepartamentoActionPerformed
 
     private void menuItemCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCiudadActionPerformed
-        if (evt.ACTION_PERFORMED == 1001) {
-            CiudadControlForm abrir = new CiudadControlForm(this, true);
-            abrir.setTitle("Control Ciudades" + CLICK_CAJA_V2);
-            abrir.setVisible(true);
-        }
+        CiudadControlForm abrir = new CiudadControlForm(this, true);
+        abrir.setTitle("Control Ciudades" + CLICK_CAJA_V2);
+        abrir.setVisible(true);
     }//GEN-LAST:event_menuItemCiudadActionPerformed
 
     /**

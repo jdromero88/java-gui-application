@@ -18,9 +18,10 @@ import model.Departamento;
 public class DepartamentoControlForm extends javax.swing.JDialog {
     private static final String CLICK_CAJA_V2 = " | ClickCaja V 2.0";
     private Departamento departamento = null;
-    private final String[] TITULOS = {"Codigo", "Nombre"};
+    private final String[] TITULOS = {"Código", "Nombre"};
     //Para filtrar
     private TableRowSorter<DefaultTableModel> sorter;
+    
     private DefaultTableModel modelo;
     /**
      * Creates new form DepartamentoControlForm
@@ -41,8 +42,7 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         
         // Al abrir rBtnSeleccionado y txtBuscar gana el foco
         rBtnNombre.setSelected(true);
-        txtBuscar.requestFocus();
-        
+        txtBuscar.requestFocus();        
         try {
             cargarTabla();
         } catch (Exception e) {
@@ -58,11 +58,17 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         try {
             // asignamos todos los departamentos a el arraylist departamentos
             departamentos = DepartamentoController.getAll();
-            for (Departamento departamento : departamentos) {
-                registro[0] = String.valueOf(departamento.getId());
-                registro[1] = departamento.getNombre();
+            departamentos.stream().forEach((Departamento depto) -> {
+                registro[0] = String.valueOf(depto.getId());
+                registro[1] = depto.getNombre();
                 modelo.addRow(registro);
-            }
+            });
+            
+//            for (Departamento depto : departamentos) {
+//                registro[0] = String.valueOf(depto.getId());
+//                registro[1] = depto.getNombre();
+//                modelo.addRow(registro);
+//            }
         } catch (Exception e) {
             System.err.println("Error al obtener los departamentos para cargar la tabla: " + e);
         }

@@ -30,6 +30,7 @@ public class CiudadController {
                 ciudad.setId(rs.getInt("id"));
                 ciudad.setNombre(rs.getString("nombre"));
                 ciudad.setDepartamentoId(rs.getInt("departamento_id"));
+                ciudades.add(ciudad);
             }
             return ciudades;
         } catch (Exception e) {

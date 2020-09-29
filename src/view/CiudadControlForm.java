@@ -6,14 +6,27 @@
 
 package view;
 
+import controller.CiudadController;
+import java.util.ArrayList;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.Ciudad;
 
 /**
  *
  * @author jodarove
  */
 public class CiudadControlForm extends javax.swing.JDialog {
-
+    private static final String CLICK_CAJA_V2 = " | ClickCaja V 2.0";
+    private Ciudad ciudad = null;
+    private final String[] TITULOS = {"Código", "Nombre"};
+    //Para filtrar
+    private TableRowSorter<DefaultTableModel> sorter;
+    
+    private DefaultTableModel modelo;
     /**
      * Creates new form CiudadControlForm
      */
@@ -33,10 +46,36 @@ public class CiudadControlForm extends javax.swing.JDialog {
         rBtnNombre.setSelected(true);
         txtBuscar.requestFocus();
         try {
-            // cargarTabla();
+            cargarTabla();
         } catch (Exception e) {
             System.err.println("Algo paso al cargar tabla al iniciar el form: " + e);
         }
+    }
+    
+    private void cargarTabla() throws Exception{
+        String[] registro = new String[2];
+        // Declaramos un arraylist de tipo Departamento
+        ArrayList<Ciudad> ciudades;
+        modelo = new DefaultTableModel(TITULOS, 0);
+        try {
+            // se asigna todas las ciudades a el arraylist ciudades
+            ciudades = CiudadController.getAll();
+            ciudades.stream().forEach((Ciudad ciu) -> {
+                registro[0] = String.valueOf(ciu.getId());
+                registro[1] = ciu.getNombre();
+                modelo.addRow(registro);
+            });
+//            for (Ciudad ciu : ciudades) {
+//                registro[0] = String.valueOf(ciu.getId());
+//                registro[1] = ciu.getNombre();
+//                modelo.addRow(registro);
+//            }
+        } catch (Exception e) {
+            System.err.println("Error al obtener las ciudades para cargar la tabla: " + e);
+        }
+        sorter = new TableRowSorter<>(modelo);
+        tblCiudades.setRowSorter(sorter);
+        tblCiudades.setModel(modelo);
     }
 
     /**
@@ -81,15 +120,14 @@ public class CiudadControlForm extends javax.swing.JDialog {
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
+        tblCiudades.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tblCiudades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Nombre"
             }
         ));
         jScrollPane1.setViewportView(tblCiudades);
@@ -135,6 +173,11 @@ public class CiudadControlForm extends javax.swing.JDialog {
         btnAgregar.setMaximumSize(new java.awt.Dimension(120, 32));
         btnAgregar.setMinimumSize(new java.awt.Dimension(120, 32));
         btnAgregar.setPreferredSize(new java.awt.Dimension(120, 32));
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnEditar.setText("Editar");
@@ -142,6 +185,11 @@ public class CiudadControlForm extends javax.swing.JDialog {
         btnEditar.setMaximumSize(new java.awt.Dimension(120, 32));
         btnEditar.setMinimumSize(new java.awt.Dimension(120, 32));
         btnEditar.setPreferredSize(new java.awt.Dimension(120, 32));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnEliminar.setText("Elminar");
@@ -149,10 +197,20 @@ public class CiudadControlForm extends javax.swing.JDialog {
         btnEliminar.setMaximumSize(new java.awt.Dimension(120, 32));
         btnEliminar.setMinimumSize(new java.awt.Dimension(120, 32));
         btnEliminar.setPreferredSize(new java.awt.Dimension(120, 32));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnImprimir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnImprimir.setText("Imprimir");
         btnImprimir.setToolTipText("Imprime lista de ciudades");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         btnCerrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnCerrar.setText("Cerrar");
@@ -160,6 +218,11 @@ public class CiudadControlForm extends javax.swing.JDialog {
         btnCerrar.setMaximumSize(new java.awt.Dimension(120, 32));
         btnCerrar.setMinimumSize(new java.awt.Dimension(120, 32));
         btnCerrar.setPreferredSize(new java.awt.Dimension(120, 32));
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -199,6 +262,59 @@ public class CiudadControlForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        imprimir();
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        cerrar();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+    
+
+    private Boolean seleccionarCiudad() throws Exception{
+        int filaSeleccionada = tblCiudades.getSelectedRow();
+        if(filaSeleccionada == -1){
+            JOptionPane.showMessageDialog(rootPane, "No hay departamento seleccionado", "Informacion", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else{
+            String valorCelda = (String)tblCiudades.getValueAt(filaSeleccionada, 0);
+            int ciudadId = Integer.valueOf(valorCelda);
+            ciudad = CiudadController.get(ciudadId);
+            return true;
+        }
+    }
+    private void eliminar(){
+        try {
+            if(seleccionarCiudad()){
+                if (JOptionPane.showConfirmDialog(this, "Esta seguro que desea eliminar la ciudad?") == 0) {
+                    CiudadController.delete(ciudad);
+                    JOptionPane.showMessageDialog(rootPane, "Ciudad eliminada", "Información", JOptionPane.INFORMATION_MESSAGE);
+                }
+                tblCiudades.clearSelection();
+                txtBuscar.requestFocus();
+            }
+        } catch (Exception e) {
+            System.err.println("Algo paso al eliminar ciudad " + e);
+        }
+    }
+    private void imprimir(){
+        JOptionPane.showMessageDialog(rootPane, "Aqui mostramos reporte lista de ciudades");
+    }
+    private void cerrar(){
+        this.dispose();
+    }
     /**
      * @param args the command line arguments
      */
