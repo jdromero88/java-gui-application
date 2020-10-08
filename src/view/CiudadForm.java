@@ -6,12 +6,17 @@
 
 package view;
 
+import controller.CiudadController;
+import javax.swing.JOptionPane;
+import model.Ciudad;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  *
  * @author jodarove
  */
 public class CiudadForm extends javax.swing.JDialog {
-
+    private Ciudad ciudad = new Ciudad();
     /**
      * Creates new form CiudadForm
      */
@@ -20,8 +25,59 @@ public class CiudadForm extends javax.swing.JDialog {
         initComponents();
         // centra el form
         setLocationRelativeTo(null);
+        lblTitulo.setText("Agregar Ciudad");
+        btnOk.setText("Agregar");
     }
+    
+    public CiudadForm(java.awt.Frame parent, boolean modal, Ciudad ciudad) {
+        super(parent, modal);
+        initComponents();
+        // centra el form
+        setLocationRelativeTo(null);
+        this.ciudad = ciudad;
+        lblTitulo.setText("Editar Ciudad");
+        btnOk.setText("Guardar");
+        txtNombre.setText(ciudad.getNombre());
+    }    
 
+    private boolean validarDatos(){
+        String nombre = txtNombre.getText();
+        if (nombre == null || nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos.", "Campos incompletos",  JOptionPane.INFORMATION_MESSAGE);
+            txtNombre.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    private void setDatos(){
+        ciudad.setNombre(StringUtils.capitalize(txtNombre.getText()));
+    }
+    
+    private void agregar(){
+        try {
+            CiudadController.add(ciudad);
+            JOptionPane.showMessageDialog(rootPane, "Ciudad agregada!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (Exception e) {
+            System.err.println("Error al agregar Ciudad: " + e);
+        }
+    }
+    
+    private void editar(){
+        try {
+            CiudadController.update(ciudad);
+            JOptionPane.showMessageDialog(rootPane, "Ciudad Actualizada!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (Exception e) {
+            System.err.println("Error al editar Ciudad: " + e);
+        }
+    }
+    
+    private void cancelar(){
+        dispose();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,16 +114,41 @@ public class CiudadForm extends javax.swing.JDialog {
 
         btnOk.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnOk.setText("jButton1");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnOk);
 
         btnCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCancelar);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        if (validarDatos()) {
+            setDatos();
+            if (btnOk.getText().equals("Agregar")) {
+                agregar();
+            } else {
+                editar();
+            }
+        }
+    }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        cancelar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
