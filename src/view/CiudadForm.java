@@ -89,6 +89,8 @@ public class CiudadForm extends javax.swing.JDialog {
 
         lblTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cmbDepartamentos = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnOk = new javax.swing.JButton();
@@ -102,7 +104,16 @@ public class CiudadForm extends javax.swing.JDialog {
         lblTitulo.setText("jLabel1");
         getContentPane().add(lblTitulo, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(3, 2));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Departamento:");
+        jPanel1.add(jLabel1);
+
+        cmbDepartamentos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cmbDepartamentos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cmbDepartamentos);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -195,6 +206,8 @@ public class CiudadForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnOk;
+    private javax.swing.JComboBox cmbDepartamentos;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblTitulo;
