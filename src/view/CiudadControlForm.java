@@ -258,7 +258,7 @@ public class CiudadControlForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        agregar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -277,7 +277,16 @@ public class CiudadControlForm extends javax.swing.JDialog {
         cerrar();
     }//GEN-LAST:event_btnCerrarActionPerformed
     
-
+    private void agregar(){
+        CiudadForm abrir = new CiudadForm(null, true);
+        abrir.setTitle("Agregar Ciudad " + CLICK_CAJA_V2);
+        abrir.setVisible(true);
+        try {
+            cargarTabla();
+        } catch (Exception e) {
+            System.err.println("Algo paso al intentar cargar la tabla despues de agregar: " + e);
+        }
+    }
     private Boolean seleccionarCiudad() throws Exception{
         int filaSeleccionada = tblCiudades.getSelectedRow();
         if(filaSeleccionada == -1){
