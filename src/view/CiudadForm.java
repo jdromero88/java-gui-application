@@ -8,6 +8,7 @@ package view;
 
 import controller.CiudadController;
 import controller.DepartamentoController;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,10 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class CiudadForm extends javax.swing.JDialog {
     private Ciudad ciudad = new Ciudad();
+    /* Declaramos variable departamento de tipo Departamento
+    y lo asignamos al seleccionar departamento en el combobox
+    */
+    Departamento departamento;    
     /**
      * Creates new form CiudadForm
      */
@@ -63,6 +68,7 @@ public class CiudadForm extends javax.swing.JDialog {
     
     private void setDatos(){
         ciudad.setNombre(StringUtils.capitalize(txtNombre.getText()));
+        ciudad.setDepartamentoId(departamento.getId());
     }
     
     private void agregar(){
@@ -131,6 +137,11 @@ public class CiudadForm extends javax.swing.JDialog {
 
         cmbDepartamentos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cmbDepartamentos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDepartamentos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDepartamentosItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cmbDepartamentos);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -178,6 +189,19 @@ public class CiudadForm extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cmbDepartamentosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDepartamentosItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            try {
+                // busca y asigna de acuerdo al departamento seleccionado
+                departamento = DepartamentoController.getByName(cmbDepartamentos.getSelectedItem().toString());
+                System.out.println(departamento.getId());
+            } catch (Exception ex) {
+                Logger.getLogger(CiudadForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }//GEN-LAST:event_cmbDepartamentosItemStateChanged
 
     /**
      * @param args the command line arguments
