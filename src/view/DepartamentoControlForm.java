@@ -121,7 +121,7 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         try {
             cargarTabla();
         } catch (Exception e) {
-            System.err.println("Algo paso al intentar cargar la tabla despues de agreagar: " + e);
+            System.err.println("Algo paso al intentar cargar la tabla despues de agregar: " + e);
         }
     }
     

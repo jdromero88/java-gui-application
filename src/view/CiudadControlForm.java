@@ -8,6 +8,8 @@ package view;
 
 import controller.CiudadController;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -261,11 +263,11 @@ public class CiudadControlForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        editar();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
@@ -276,6 +278,15 @@ public class CiudadControlForm extends javax.swing.JDialog {
         cerrar();
     }//GEN-LAST:event_btnCerrarActionPerformed
     
+    private void limpiarTxtBuscar(){
+        txtBuscar.setText(null);
+        txtBuscar.requestFocus();
+        try {
+            cargarTabla();
+        } catch (Exception e) {
+            Logger.getLogger(CiudadControlForm.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
     private void agregar(){
         CiudadForm abrir = new CiudadForm(null, true);
         abrir.setTitle("Agregar Ciudad " + CLICK_CAJA_V2);
@@ -284,6 +295,19 @@ public class CiudadControlForm extends javax.swing.JDialog {
             cargarTabla();
         } catch (Exception e) {
             System.err.println("Algo paso al intentar cargar la tabla despues de agregar: " + e);
+        }
+    }
+    private void editar(){
+        try {
+            if (seleccionarCiudad()) {
+                CiudadForm abrir = new CiudadForm(null, true, ciudad);
+                abrir.setTitle("Editar Ciudad" + CLICK_CAJA_V2);
+                abrir.setVisible(true);
+                limpiarTxtBuscar();
+                //cargarTabla();            
+            }
+        } catch (Exception e) {
+            System.err.println("Algo paso al intentar cargar la tabla despues de editar");
         }
     }
     private Boolean seleccionarCiudad() throws Exception{

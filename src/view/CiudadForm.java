@@ -53,6 +53,11 @@ public class CiudadForm extends javax.swing.JDialog {
         lblTitulo.setText("Editar Ciudad");
         btnOk.setText("Guardar");
         txtNombre.setText(ciudad.getNombre());
+        try {
+            cargarDepartamentoComboBox();
+        } catch (Exception ex) {
+            Logger.getLogger(CiudadForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     private boolean validarDatos(){
