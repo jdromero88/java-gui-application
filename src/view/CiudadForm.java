@@ -7,8 +7,13 @@
 package view;
 
 import controller.CiudadController;
+import controller.DepartamentoController;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Ciudad;
+import model.Departamento;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -27,6 +32,11 @@ public class CiudadForm extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         lblTitulo.setText("Agregar Ciudad");
         btnOk.setText("Agregar");
+        try {
+            cargarDepartamentoComboBox();
+        } catch (Exception ex) {
+            Logger.getLogger(CiudadForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public CiudadForm(java.awt.Frame parent, boolean modal, Ciudad ciudad) {
@@ -78,6 +88,14 @@ public class CiudadForm extends javax.swing.JDialog {
     private void cancelar(){
         dispose();
     }
+    
+    private void cargarDepartamentoComboBox() throws Exception{
+        cmbDepartamentos.removeAllItems();
+        ArrayList<Departamento> departamentos = DepartamentoController.getAll();
+        departamentos.stream().forEach((departamento) -> {
+            cmbDepartamentos.addItem(departamento.getNombre());
+        });
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
