@@ -120,6 +120,9 @@
                   <Font name="Dialog" size="18" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarKeyReleased"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
               <AuxValues>
@@ -265,7 +268,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="18" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Elminar"/>
+                <Property name="text" type="java.lang.String" value="Eliminar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Elimina la Ciudad"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[120, 32]"/>

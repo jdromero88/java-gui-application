@@ -207,11 +207,6 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtBuscar.setToolTipText("Ingrese texto para buscar...");
-        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarActionPerformed(evt);
-            }
-        });
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBuscarKeyReleased(evt);
@@ -363,10 +358,6 @@ public class DepartamentoControlForm extends javax.swing.JDialog {
         String textoBuscado = txtBuscar.getText();
         filtrarTabla(textoBuscado);
     }//GEN-LAST:event_txtBuscarKeyReleased
-
-    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarActionPerformed
 
     /**
      * @param args the command line arguments

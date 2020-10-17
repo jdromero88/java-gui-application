@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Ciudad;
@@ -73,6 +74,26 @@ public class CiudadControlForm extends javax.swing.JDialog {
         tblCiudades.setRowSorter(sorter);
         tblCiudades.setModel(modelo);
     }
+    
+    private void filtrarTabla(String textoBuscado){
+        RowFilter<DefaultTableModel, Object> rf = null;
+        try {
+            if (rBtnNombre.isSelected()) {
+                // (?i) inicia modo case insentivo
+                // (?-i) termina modo case sensitivo
+                rf = RowFilter.regexFilter("(?i)" + textoBuscado, 1);
+            }
+            if(rBtnCodigo.isSelected()){
+                // (?i) inicia modo case insentivo
+                // (?-i) termina modo case sensitivo
+                rf = RowFilter.regexFilter(textoBuscado, 0);
+            }
+        } catch (Exception e) {
+            System.err.println("Algo paso al filtrar la tabla: " + e);
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,6 +136,11 @@ public class CiudadControlForm extends javax.swing.JDialog {
         rBtnNombre.setText("Nombre");
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
         tblCiudades.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tblCiudades.setModel(new javax.swing.table.DefaultTableModel(
@@ -188,7 +214,7 @@ public class CiudadControlForm extends javax.swing.JDialog {
         });
 
         btnEliminar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnEliminar.setText("Elminar");
+        btnEliminar.setText("Eliminar");
         btnEliminar.setToolTipText("Elimina la Ciudad");
         btnEliminar.setMaximumSize(new java.awt.Dimension(120, 32));
         btnEliminar.setMinimumSize(new java.awt.Dimension(120, 32));
@@ -277,6 +303,11 @@ public class CiudadControlForm extends javax.swing.JDialog {
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         cerrar();
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        String textoBuscado = txtBuscar.getText();
+        filtrarTabla(textoBuscado);
+    }//GEN-LAST:event_txtBuscarKeyReleased
     
     private void limpiarTxtBuscar(){
         txtBuscar.setText(null);
@@ -328,6 +359,7 @@ public class CiudadControlForm extends javax.swing.JDialog {
                 if (JOptionPane.showConfirmDialog(this, "Esta seguro que desea eliminar la ciudad?") == 0) {
                     CiudadController.delete(ciudad);
                     JOptionPane.showMessageDialog(rootPane, "Ciudad eliminada", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    cargarTabla();
                 }
                 tblCiudades.clearSelection();
                 txtBuscar.requestFocus();
