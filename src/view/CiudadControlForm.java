@@ -111,7 +111,12 @@ public class CiudadControlForm extends javax.swing.JDialog {
         rBtnNombre = new javax.swing.JRadioButton();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCiudades = new javax.swing.JTable();
+        tblCiudades = // desactivar edicion de celdas
+        tblCiudades = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         jPanel3 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();

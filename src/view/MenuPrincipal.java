@@ -40,6 +40,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuItemCategoria = new javax.swing.JMenuItem();
         menuItemDepartamento = new javax.swing.JMenuItem();
         menuItemCiudad = new javax.swing.JMenuItem();
+        menuItemFuncionarios = new javax.swing.JMenuItem();
+        menuItemClientes = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ClickCaja V2");
@@ -101,6 +103,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         menuConfiguracion.add(menuItemCiudad);
 
+        menuItemFuncionarios.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        menuItemFuncionarios.setText("Funcionarios");
+        menuItemFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemFuncionariosActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(menuItemFuncionarios);
+
+        menuItemClientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        menuItemClientes.setText("Clientes");
+        menuConfiguracion.add(menuItemClientes);
+
         jMenuBar1.add(menuConfiguracion);
 
         setJMenuBar(jMenuBar1);
@@ -153,6 +168,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         abrir.setVisible(true);
     }//GEN-LAST:event_menuItemCiudadActionPerformed
 
+    private void menuItemFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFuncionariosActionPerformed
+        FuncionarioControlForm abrir = new FuncionarioControlForm(this, true);
+        abrir.setTitle("Control Funcionarios" + CLICK_CAJA_V2);
+        abrir.setVisible(true);
+    }//GEN-LAST:event_menuItemFuncionariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -195,7 +216,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuConfiguracion;
     private javax.swing.JMenuItem menuItemCategoria;
     private javax.swing.JMenuItem menuItemCiudad;
+    private javax.swing.JMenuItem menuItemClientes;
     private javax.swing.JMenuItem menuItemDepartamento;
+    private javax.swing.JMenuItem menuItemFuncionarios;
     private javax.swing.JMenuItem menuItemSalir;
     // End of variables declaration//GEN-END:variables
 }

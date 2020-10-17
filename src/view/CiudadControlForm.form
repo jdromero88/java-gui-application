@@ -161,6 +161,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="// desactivar edicion de celdas&#xa;tblCiudades = new javax.swing.JTable(){&#xa;    public boolean isCellEditable(int row, int column) {&#xa;        return false;&#xa;    }&#xa;}"/>
                     <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="CiudadControlForm_tblCiudades"/>
                   </AuxValues>
                 </Component>
