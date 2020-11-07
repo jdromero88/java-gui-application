@@ -6,19 +6,46 @@
 
 package view;
 
+import javax.swing.ButtonGroup;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.Funcionario;
+
 /**
  *
  * @author jodarove
  */
 public class FuncionarioControlForm extends javax.swing.JDialog {
-
+    private static final String CLICK_CAJA_V2 = " | ClickCaja V 2.0";
+    private Funcionario funcionario = null;
+    private final String[] TITULOS = {"Código", "Nombre"};
+    //Para filtrar
+    private TableRowSorter<DefaultTableModel> sorter;
+    
+    private DefaultTableModel modelo;    
     /**
      * Creates new form FuncionarioControlForm
      */
     public FuncionarioControlForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        // centrar el form
         setLocationRelativeTo(null);
+        // Desactiva el boton eliminar
+        btnEliminar.setEnabled(false);
+        //Agrupar botones
+        ButtonGroup group = new ButtonGroup();
+        group.add(rBtnCodigo);
+        group.add(rBtnNombre);
+        
+        // rBtnNombre seleccionado por defecto y txtBuscar gana el foco
+        rBtnNombre.setSelected(true);
+        txtBuscar.requestFocus();
+        try {
+            cargarTabla();
+        } catch (Exception e) {
+            System.err.println("Algo paso al cargar tabla al iniciar el form: " + e);
+        }
     }
 
     /**
@@ -33,17 +60,17 @@ public class FuncionarioControlForm extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jTextField1 = new javax.swing.JTextField();
+        rBtnCodigo = new javax.swing.JRadioButton();
+        rBtnNombre = new javax.swing.JRadioButton();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -53,13 +80,13 @@ public class FuncionarioControlForm extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Buscar por:");
 
-        jRadioButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jRadioButton1.setText("Cod.");
+        rBtnCodigo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        rBtnCodigo.setText("Cod.");
 
-        jRadioButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jRadioButton2.setText("Nombre");
+        rBtnNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        rBtnNombre.setText("Nombre");
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtBuscar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,11 +112,11 @@ public class FuncionarioControlForm extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton1)
+                        .addComponent(rBtnCodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2)
+                        .addComponent(rBtnNombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1)))
+                        .addComponent(txtBuscar)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -98,9 +125,9 @@ public class FuncionarioControlForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rBtnCodigo)
+                    .addComponent(rBtnNombre)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -110,24 +137,34 @@ public class FuncionarioControlForm extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Acciones", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton1.setText("Agregar");
+        btnAgregar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton2.setText("Editar");
-        jButton2.setToolTipText("Abre formulario para editar funcionario");
+        btnEditar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.setToolTipText("Abre formulario para editar funcionario");
 
-        jButton3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton3.setText("Eliminar");
-        jButton3.setToolTipText("Elimina al Funcionario");
+        btnEliminar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setToolTipText("Elimina al Funcionario");
 
-        jButton4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton4.setText("Imprimir");
-        jButton4.setToolTipText("Imprime lista de Funcionarios");
+        btnImprimir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnImprimir.setText("Imprimir");
+        btnImprimir.setToolTipText("Imprime lista de Funcionarios");
 
-        jButton5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton5.setText("Cerrar");
-        jButton5.setToolTipText("Cierra esta ventana.");
+        btnCerrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnCerrar.setText("Cerrar");
+        btnCerrar.setToolTipText("Cierra esta ventana.");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -136,25 +173,25 @@ public class FuncionarioControlForm extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jButton1)
+                .addComponent(btnAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(btnImprimir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(btnCerrar)
                 .addGap(0, 148, Short.MAX_VALUE))
         );
 
@@ -165,6 +202,26 @@ public class FuncionarioControlForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        agregar();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        cerrar();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+    
+    private void cargarTabla(){
+//        aca cargamos la tabla con los datos del funcionario
+    }
+    private void agregar(){
+        FuncionarioForm abrir = new FuncionarioForm(null, true);
+        abrir.setTitle("Agregar Funcionario " + CLICK_CAJA_V2);
+        abrir.setVisible(true);
+        
+    }
+    private void cerrar(){
+        dispose();
+    }
     /**
      * @param args the command line arguments
      */
@@ -208,19 +265,19 @@ public class FuncionarioControlForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JRadioButton rBtnCodigo;
+    private javax.swing.JRadioButton rBtnNombre;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
